@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="4450 Scouting"
+        android:id="@+id/Title"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/editText"
+        android:hint="Team Number"
+        android:layout_below="@+id/Title"
+        android:layout_alignParentStart="true"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="High Goal"
+        android:id="@+id/HighGoalCheckBox"
+        android:checked="false"
+        android:layout_below="@+id/defensecheckbox"
+        android:layout_toStartOf="@+id/defensecheckbox" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Low Goal"
+        android:id="@+id/LowGoalCheckBox"
+        android:checked="false"
+        android:layout_alignBottom="@+id/HighGoalCheckBox"
+        android:layout_toStartOf="@+id/checkBox" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="Name"
+        android:ems="10"
+        android:id="@+id/editText2"
+        android:layout_below="@+id/editText"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Auto_Description_Textbox"
+        android:layout_below="@+id/editText2"
+        android:layout_alignParentStart="true"
+        android:text=""
+        android:hint="What they did in Autonomous"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Which obstacles they crossed"
+        android:id="@+id/LabelForWhichObstacle"
+        android:layout_below="@+id/HighGoalCheckBox"
+        android:layout_alignRight="@+id/SlowObstacleCross"
+        android:layout_alignEnd="@+id/SlowObstacleCross" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="How Fast was Pickup"
+        android:id="@+id/howfastpickuplabel"
+        android:layout_below="@+id/Auto_Description_Textbox"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fast"
+        android:id="@+id/FastPickup"
+        android:layout_below="@+id/howfastpickuplabel"
+        android:layout_alignParentStart="true"
+        android:checked="false" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Medium"
+        android:id="@+id/MediumPickup"
+        android:layout_below="@+id/FastPickup"
+        android:layout_alignParentStart="true"
+        android:checked="false" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Slow"
+        android:id="@+id/SlowPickupCheckbox"
+        android:layout_below="@+id/MediumPickup"
+        android:layout_alignParentStart="true"
+        android:checked="false" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fast"
+        android:id="@+id/FasatObstacleCross"
+        android:layout_below="@+id/Obstaclecrossspeed"
+        android:layout_alignParentStart="true"
+        android:checked="false" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="How Fast was Obstacle Crossing"
+        android:id="@+id/Obstaclecrossspeed"
+        android:layout_below="@+id/SlowPickupCheckbox"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Medium"
+        android:id="@+id/MediumObstacleCross"
+        android:checked="false"
+        android:layout_alignTop="@+id/FasatObstacleCross"
+        android:layout_toEndOf="@+id/HighGoalCheckBox" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Slow"
+        android:id="@+id/SlowObstacleCross"
+        android:checked="false"
+        android:layout_above="@+id/defensecheckbox"
+        android:layout_toEndOf="@+id/defensecheckbox" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Defended"
+        android:id="@+id/defensecheckbox"
+        android:checked="false"
+        android:layout_below="@+id/MediumObstacleCross"
+        android:layout_toEndOf="@+id/ClimbedCheckbox" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Climbed"
+        android:id="@+id/ClimbedCheckbox"
+        android:layout_below="@+id/FasatObstacleCross"
+        android:layout_alignParentStart="true"
+        android:checked="false" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Neither Goal"
+        android:id="@+id/neithergoal"
+        android:checked="false"
+        android:layout_above="@+id/LabelForWhichObstacle"
+        android:layout_toEndOf="@+id/LowGoalCheckBox" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="On Castle At end of match"
+        android:id="@+id/checkBox"
+        android:layout_below="@+id/SlowObstacleCross"
+        android:layout_toEndOf="@+id/defensecheckbox"
+        android:checked="false" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Portcullis"
+        android:id="@+id/PortcullisCheckbox"
+        android:layout_below="@+id/LabelForWhichObstacle"
+        android:layout_alignParentStart="true"
+        android:checked="false" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Teeter Totter"
+        android:id="@+id/TeeterTotterCheckBox"
+        android:checked="false"
+        android:layout_above="@+id/RampartCheckBox"
+        android:layout_alignEnd="@+id/editText2" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Moat"
+        android:id="@+id/MoatTextBox"
+        android:layout_alignTop="@+id/TeeterTotterCheckBox"
+        android:layout_toEndOf="@+id/LabelForWhichObstacle"
+        android:checked="false" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ramparts"
+        android:id="@+id/RampartCheckBox"
+        android:layout_below="@+id/PortcullisCheckbox"
+        android:layout_alignParentStart="true"
+        android:checked="false" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DrawBridge"
+        android:id="@+id/DrawbridgeCheckBox"
+        android:checked="false"
+        android:layout_below="@+id/TeeterTotterCheckBox"
+        android:layout_alignEnd="@+id/Obstaclecrossspeed" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sally Port"
+        android:id="@+id/SallyportCheckBox"
+        android:checked="false"
+        android:layout_below="@+id/MoatTextBox"
+        android:layout_alignStart="@+id/MoatTextBox" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rock Wall"
+        android:id="@+id/RockWallCheckBox"
+        android:layout_below="@+id/RampartCheckBox"
+        android:layout_alignParentStart="true"
+        android:checked="false" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rough Terrain"
+        android:id="@+id/RoughTerrainCheckBox"
+        android:checked="false"
+        android:layout_below="@+id/DrawbridgeCheckBox"
+        android:layout_alignStart="@+id/DrawbridgeCheckBox" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Low Bar"
+        android:id="@+id/LowBardCheckBox"
+        android:layout_below="@+id/SallyportCheckBox"
+        android:layout_alignStart="@+id/SallyportCheckBox"
+        android:checked="false" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:id="@+id/FinalScoreEditText"
+        android:hint="Final Score"
+        android:layout_alignTop="@+id/Obstaclecrossspeed"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:inputType="number"
+        android:layout_height="wrap_content"
+        android:id="@+id/BallsScoredEdittext"
+        android:text="0"
+        android:layout_alignBottom="@+id/button"
+        android:layout_toEndOf="@+id/SlowObstacleCross" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ball Scored"
+        android:id="@+id/button"
+        android:onClick="BallCounter"
+        android:layout_alignBottom="@+id/SlowPickupCheckbox"
+        android:layout_toEndOf="@+id/Title" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Less Than 3 Sec"
+        android:id="@+id/FastDef"
+        android:layout_below="@+id/howfastpickuplabel"
+        android:layout_alignStart="@+id/TeeterTotterCheckBox" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" Between 3 and 5 Sec"
+        android:id="@+id/MidDef"
+        android:layout_above="@+id/BallsScoredEdittext"
+        android:layout_alignStart="@+id/FastDef" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="More than 5 sec"
+        android:id="@+id/textView"
+        android:layout_alignTop="@+id/SlowPickupCheckbox"
+        android:layout_alignStart="@+id/MidDef" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:id="@+id/SaveButton"
+        android:layout_below="@+id/RoughTerrainCheckBox"
+        android:layout_alignStart="@+id/TeeterTotterCheckBox" />
+
+</RelativeLayout>
