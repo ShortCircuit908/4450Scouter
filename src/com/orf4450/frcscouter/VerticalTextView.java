@@ -8,7 +8,7 @@ import android.view.Gravity;
 import android.widget.TextView;
 
 /**
- * @author ShortCircuit908
+ * @author Caleb Milligan
  *         Created on 2/4/2016
  */
 public class VerticalTextView extends TextView {

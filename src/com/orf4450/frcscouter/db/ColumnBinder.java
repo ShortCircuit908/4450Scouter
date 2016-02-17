@@ -2,6 +2,7 @@ package com.orf4450.frcscouter.db;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.LinkedList;
 import java.util.Map;
 
 /**
- * @author ShortCircuit908
+ * @author Caleb Milligan
  *         Created on 2/4/2016
  */
 public class ColumnBinder {
@@ -50,12 +51,12 @@ public class ColumnBinder {
 		}
 		StringBuilder builder = new StringBuilder("DROP TABLE IF EXISTS `")
 				.append(table_name)
-				.append("`;\n")
+				.append("`;")
 				.append("CREATE TABLE `")
 				.append(table_name)
-				.append("` (\n\t`id` INT(11) AUTO_INCREMENT");
+				.append("` (`_id` INTEGER PRIMARY KEY");
 		for (AbstractColumnBinding<?, ?> binding : bindings) {
-			builder.append(",\n\t`").append(binding.getColumnName()).append("` ").append(binding.getColumnClass());
+			builder.append(", `").append(binding.getColumnName()).append("` ").append(binding.getColumnClass());
 			if (binding.getColumnLength() > -1) {
 				builder.append('(').append(binding.getColumnLength()).append(')');
 			}
@@ -63,10 +64,11 @@ public class ColumnBinder {
 				builder.append(" NOT NULL");
 			}
 			if (binding.getDefaultValue() != null) {
-				builder.append(" DEFAULT ").append(binding.getDefaultValue());
+				builder.append(" DEFAULT ");
+				builder.append(binding.getDefaultValue());
 			}
 		}
-		builder.append(",\n\tPRIMARY KEY `id`\n) AUTO_INCREMENT=1;");
+		builder.append(");");
 		return builder.toString();
 	}
 
@@ -75,7 +77,7 @@ public class ColumnBinder {
 			throw new IllegalStateException("At least one binding is required");
 		}
 		ArrayList<Object> bindargs = new ArrayList<>(bindings.size());
-		StringBuilder query_builder = new StringBuilder("INSERT INTO `").append(table_name).append("` (");
+		StringBuilder query_builder = new StringBuilder("INSERT OR REPLACE INTO `").append(table_name).append("` (");
 		for (AbstractColumnBinding<?, ?> binding : bindings) {
 			query_builder.append('`').append(binding.getColumnName()).append("`, ");
 		}
@@ -91,7 +93,7 @@ public class ColumnBinder {
 	}
 
 	public Integer[] queryRowsMatchingParameters(SQLiteDatabase db, String table_name, HashMap<String, Object> search_parameters) {
-		StringBuilder query_builder = new StringBuilder("SELECT `id` FROM `")
+		StringBuilder query_builder = new StringBuilder("SELECT `_id` FROM `")
 				.append(table_name).append("`");
 		appendWhereClause(query_builder, search_parameters);
 		query_builder.append(';');
@@ -104,7 +106,7 @@ public class ColumnBinder {
 		return ids.toArray(new Integer[ids.size()]);
 	}
 
-	private void appendWhereClause(StringBuilder query_builder, HashMap<String, Object> search_parameters){
+	private void appendWhereClause(StringBuilder query_builder, HashMap<String, Object> search_parameters) {
 		if (search_parameters.size() > 0) {
 			query_builder.append(" WHERE ");
 			for (Map.Entry<String, Object> search_parameter : search_parameters.entrySet()) {
@@ -139,7 +141,7 @@ public class ColumnBinder {
 
 	@SuppressWarnings("unchecked")
 	public void load(SQLiteDatabase db, String table_name, int id) {
-		Cursor cursor = db.rawQuery("SELECT * FROM `" + table_name + "` WHERE `id`=" + id, null);
+		Cursor cursor = db.rawQuery("SELECT * FROM `" + table_name + "` WHERE `_id`=" + id, null);
 		if (cursor.moveToNext()) {
 			for (AbstractColumnBinding binding : bindings) {
 				int column_index = cursor.getColumnIndexOrThrow(binding.getColumnName());
@@ -177,6 +179,10 @@ public class ColumnBinder {
 							case "double":
 								binding.setValue(cursor.getDouble(column_index));
 								break;
+							case "string":
+							case "charsequence":
+								binding.setValue(cursor.getString(column_index));
+								break;
 							default:
 								throw new IllegalArgumentException("Wrong class for column type " + cursor.getType(column_index));
 						}
@@ -198,5 +204,36 @@ public class ColumnBinder {
 			}
 		}
 		cursor.close();
+	}
+
+	public Bundle saveToBundle() {
+		return saveToBundle(null);
+	}
+
+	public Bundle saveToBundle(Bundle bundle) {
+		if (bundle == null) {
+			bundle = new Bundle(bindings.size());
+		}
+		for (AbstractColumnBinding<?, ?> binding : bindings) {
+			binding.saveToBundle(bundle);
+		}
+		return bundle;
+	}
+
+	public void loadFromBundle(Bundle bundle) {
+		if (bundle == null) {
+			resetAll();
+		}
+		else {
+			for (AbstractColumnBinding<?, ?> binding : bindings) {
+				binding.loadFromBundle(bundle);
+			}
+		}
+	}
+
+	public void resetAll() {
+		for (AbstractColumnBinding<?, ?> binding : bindings) {
+			binding.resetValue();
+		}
 	}
 }

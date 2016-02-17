@@ -6,7 +6,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 /**
- * @author ShortCircuit908
+ * @author Caleb Milligan
  *         Created on 2/4/2016
  */
 public class ToggleableRadioButton extends RadioButton {

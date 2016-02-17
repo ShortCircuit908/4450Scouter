@@ -1,9 +1,11 @@
 package com.orf4450.frcscouter.db;
 
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.widget.TextView;
 
 /**
- * @author ShortCircuit908
+ * @author Caleb Milligan
  *         Created on 2/4/2016
  */
 public class TextViewColumnBinding extends AbstractColumnBinding<TextView, CharSequence> {
@@ -35,5 +37,32 @@ public class TextViewColumnBinding extends AbstractColumnBinding<TextView, CharS
 	@Override
 	public void setValue(CharSequence value) {
 		view.setText(value);
+	}
+
+	@Override
+	public void resetValue() {
+		view.setText("");
+	}
+
+	@Override
+	public void saveToBundle(Bundle bundle) {
+		bundle.putCharSequence(column_name, getValue());
+	}
+
+	@Override
+	public void loadFromBundle(Bundle bundle) {
+		setValue(bundle.containsKey(column_name) ? bundle.getCharSequence(column_name) : "");
+	}
+
+	public CharSequence getError(){
+		return view.getError();
+	}
+
+	public void setError(CharSequence error){
+		view.setError(error);
+	}
+
+	public void setError(CharSequence error, Drawable drawable){
+		view.setError(error, drawable);
 	}
 }

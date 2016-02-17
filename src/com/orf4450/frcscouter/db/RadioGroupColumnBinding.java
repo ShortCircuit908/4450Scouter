@@ -1,16 +1,17 @@
 package com.orf4450.frcscouter.db;
 
+import android.os.Bundle;
 import android.widget.RadioGroup;
 
 /**
- * @author ShortCircuit908
+ * @author Caleb Milligan
  *         Created on 2/4/2016
  */
 public class RadioGroupColumnBinding extends AbstractColumnBinding<RadioGroup, Integer> {
 	private final int[][] id_to_value_bindings;
 
 	public RadioGroupColumnBinding(RadioGroup view, String column_name, int[][] id_to_value_bindings) {
-		super(view, column_name, Integer.class, "INT", (view.getChildCount() + "").length(), false, -1);
+		super(view, column_name, Integer.class, "INT", (view.getChildCount() + "").length(), false, null);
 		this.id_to_value_bindings = id_to_value_bindings;
 	}
 
@@ -47,4 +48,19 @@ public class RadioGroupColumnBinding extends AbstractColumnBinding<RadioGroup, I
 			view.clearCheck();
 		}
 	}
+	@Override
+	public void resetValue() {
+		view.clearCheck();
+	}
+
+	@Override
+	public void saveToBundle(Bundle bundle) {
+		bundle.putInt(column_name, getValue());
+	}
+
+	@Override
+	public void loadFromBundle(Bundle bundle) {
+		setValue(bundle.containsKey(column_name) ? bundle.getInt(column_name) : -1);
+	}
+
 }

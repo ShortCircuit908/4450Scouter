@@ -5,25 +5,58 @@
     android:versionName="1.0">
 
     <uses-sdk
-        android:minSdkVersion="17"
+        android:minSdkVersion="18"
         android:targetSdkVersion="22" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.Material.Light.DarkActionBar"
+        android:theme="@android:style/Theme.DeviceDefault.Light.DarkActionBar"
         android:icon="@drawable/icon">
         <activity
-            android:name="com.orf4450.frcscouter.Stand_Scouting"
-            android:label="4450 Scouting"
+            android:name="com.orf4450.frcscouter.stand.StandScouting"
+            android:label="4450 Stand Scouting"
             android:configChanges="orientation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.orf4450.frcscouter.pit.PitScouting"
+            android:label="4450 Pit Scouting"
+            android:configChanges="orientation">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.orf4450.frcscouter.master.MasterScouter"
+            android:label="4450 Master Scouter"
+            android:configChanges="orientation">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.orf4450.frcscouter.UploadActivity"
+            android:label="4450 Scouter Uploader"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
     </application>

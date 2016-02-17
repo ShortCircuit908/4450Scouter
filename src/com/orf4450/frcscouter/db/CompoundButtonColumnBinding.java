@@ -1,14 +1,15 @@
 package com.orf4450.frcscouter.db;
 
+import android.os.Bundle;
 import android.widget.CompoundButton;
 
 /**
- * @author ShortCircuit908
+ * @author Caleb Milligan
  *         Created on 2/4/2016
  */
 public class CompoundButtonColumnBinding extends AbstractColumnBinding<CompoundButton, Boolean> {
 	public CompoundButtonColumnBinding(CompoundButton view, String column_name) {
-		super(view, column_name, Boolean.class, "BOOLEAN", -1, false, "NULL");
+		super(view, column_name, Boolean.class, "BOOLEAN", -1, false, null);
 	}
 
 	@Override
@@ -19,5 +20,20 @@ public class CompoundButtonColumnBinding extends AbstractColumnBinding<CompoundB
 	@Override
 	public void setValue(Boolean value) {
 		view.setChecked(value);
+	}
+
+	@Override
+	public void resetValue() {
+		view.setChecked(false);
+	}
+
+	@Override
+	public void saveToBundle(Bundle bundle) {
+		bundle.putBoolean(column_name, getValue());
+	}
+
+	@Override
+	public void loadFromBundle(Bundle bundle) {
+		setValue(bundle.containsKey(column_name) && bundle.getBoolean(column_name));
 	}
 }

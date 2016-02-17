@@ -1,9 +1,9 @@
-package com.orf4450.frcscouter;
+package com.orf4450.frcscouter.stand;
 
 import com.orf4450.scouter.R;
 
 /**
- * @author ShortCircuit908
+ * @author Caleb Milligan
  *         Created on 2/4/2016
  */
 public interface ScouterConstants {

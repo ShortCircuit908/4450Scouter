@@ -1,11 +1,12 @@
 package com.orf4450.frcscouter.db;
 
+import android.os.Bundle;
 import android.view.View;
 
 /**
  * Class to establish a relationship between an input field and an SQL table column
  *
- * @author ShortCircuit908
+ * @author Caleb Milligan
  *         Created on 2/4/2016
  */
 public abstract class AbstractColumnBinding<T extends View, E> {
@@ -66,4 +67,14 @@ public abstract class AbstractColumnBinding<T extends View, E> {
 	public abstract E getValue();
 
 	public abstract void setValue(E value);
+
+	public abstract void resetValue();
+
+	public abstract void saveToBundle(Bundle bundle);
+
+	public abstract void loadFromBundle(Bundle bundle);
+
+	public int getViewId(){
+		return view.getId();
+	}
 }

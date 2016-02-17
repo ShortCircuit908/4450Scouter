@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:title="Upload"
+        android:id="@+id/save"
+        android:showAsAction="always" />
+    <item
+        android:title="Delete Local Data"
+        android:id="@+id/delete_all"
+        android:showAsAction="never" />
+    <item
+        android:title="Auto-upload"
+        android:checkable="true"
+        android:id="@+id/auto_upload"
+        android:showAsAction="never" />
+</menu>

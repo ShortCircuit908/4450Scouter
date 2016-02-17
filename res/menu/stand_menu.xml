@@ -9,9 +9,20 @@
         android:id="@+id/load"
         android:showAsAction="ifRoom" />
     <item
+        android:title="Reset"
+        android:id="@+id/reset"
+        android:showAsAction="never" />
+    <item
         android:title="Upload"
-        android:id="@+id/upload" />
+        android:id="@+id/upload"
+        android:showAsAction="never" />
     <item
         android:title="Delete Local Data"
-        android:id="@+id/delete_all" />
+        android:id="@+id/delete_all"
+        android:showAsAction="never" />
+    <item
+        android:title="Auto-upload"
+        android:checkable="true"
+        android:id="@+id/auto_upload"
+        android:showAsAction="never" />
 </menu>
