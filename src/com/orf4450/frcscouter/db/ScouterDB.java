@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * @author ShortCircuit908
+ * @author Caleb Milligan
  *         Created on 2/12/2016
  */
 public abstract class ScouterDB extends SQLiteOpenHelper{

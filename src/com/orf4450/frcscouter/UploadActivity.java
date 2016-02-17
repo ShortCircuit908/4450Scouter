@@ -18,7 +18,7 @@ import com.orf4450.scouter.R;
 import java.util.Set;
 
 /**
- * @author ShortCircuit908
+ * @author Caleb Milligan
  *         Created on 2/12/2016
  */
 public class UploadActivity extends Activity {

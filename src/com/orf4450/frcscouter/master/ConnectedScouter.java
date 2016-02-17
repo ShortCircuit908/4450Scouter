@@ -8,7 +8,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 
 /**
- * @author ShortCircuit908
+ * @author Caleb Milligan
  *         Created on 1/14/2016
  */
 public class ConnectedScouter implements Runnable {

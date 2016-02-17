@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 /**
- * @author ShortCircuit908
+ * @author Caleb Milligan
  *         Created on 1/14/2016
  */
 public class IncomingConnectionSink implements Runnable {

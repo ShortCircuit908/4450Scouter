@@ -10,7 +10,7 @@ import java.io.DataOutputStream;
 import java.util.UUID;
 
 /**
- * @author ShortCircuit908
+ * @author Caleb Milligan
  *         Created on 1/14/2016
  */
 public class UploadTask implements Runnable {

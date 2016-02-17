@@ -20,6 +20,10 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * @author Caleb Milligan
+ *         Created on 2/17/2016
+ */
 public class MasterActivity extends Activity {
 	private IncomingConnectionSink sink;
 	private BluetoothManager bluetooth_manager;

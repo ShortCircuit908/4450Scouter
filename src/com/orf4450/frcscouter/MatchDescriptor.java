@@ -1,7 +1,7 @@
 package com.orf4450.frcscouter;
 
 /**
- * @author ShortCircuit908
+ * @author Caleb Milligan
  *         Created on 1/13/2016
  */
 public class MatchDescriptor {

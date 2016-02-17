@@ -15,7 +15,7 @@ import java.io.OutputStream;
 import java.util.List;
 
 /**
- * @author ShortCircuit908
+ * @author Caleb Milligan
  *         Created on 2/11/2016
  */
 public class PitDB extends ScouterDB {

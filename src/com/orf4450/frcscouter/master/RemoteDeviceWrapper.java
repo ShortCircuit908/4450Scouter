@@ -3,7 +3,7 @@ package com.orf4450.frcscouter.master;
 import android.bluetooth.BluetoothDevice;
 
 /**
- * @author ShortCircuit908
+ * @author Caleb Milligan
  *         Created on 1/14/2016
  */
 public class RemoteDeviceWrapper {

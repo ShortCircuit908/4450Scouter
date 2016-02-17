@@ -6,7 +6,7 @@ import com.shortcircuit.nbn.Nugget;
 import java.io.*;
 
 /**
- * @author ShortCircuit908
+ * @author Caleb Milligan
  *         Created on 2/17/2016
  */
 public class MasterDB {

@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 /**
- * @author ShortCircuit908
+ * @author Caleb Milligan
  *         Created on 2/10/2016
  */
 public class DummyColumnBinding<T> extends AbstractColumnBinding<View, T> {
