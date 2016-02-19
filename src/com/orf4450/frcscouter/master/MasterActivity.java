@@ -16,7 +16,6 @@ import com.orf4450.frcscouter.TimedConfirmation;
 import com.orf4450.scouter.R;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -31,7 +30,7 @@ public class MasterActivity extends Activity {
 	private ToggleButton switch_accept_connections;
 	private SharedPreferences settings;
 	private MasterDB database_helper;
-	public static final String APPLICATION_URL = "https://www.example.com/upload"; //TODO: Set up the actual webserver for this thx
+	public static final String APPLICATION_URL = "http://orf.hulk.osd.wednet.edu/scouting/upload.php";
 
 	@Override
 	public void onCreate(Bundle state) {
@@ -81,13 +80,13 @@ public class MasterActivity extends Activity {
 
 	private void upload() throws IOException {
 		HttpURLConnection connection = (HttpURLConnection) new URL(APPLICATION_URL).openConnection();
+		connection.setDoOutput(true);
 		connection.setRequestMethod("POST");
-		connection.setConnectTimeout(5000);
+		connection.setDoInput(true);
+		connection.setRequestProperty("User-Agent", "4450Scouting/1.0");
 		connection.connect();
-		OutputStream out = connection.getOutputStream();
-		database_helper.upload(out);
-		out.flush();
-		out.close();
+		database_helper.upload(connection.getOutputStream());
+		connection.getResponseCode();
 		connection.disconnect();
 	}
 

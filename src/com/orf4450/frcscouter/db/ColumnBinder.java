@@ -72,7 +72,7 @@ public class ColumnBinder {
 		return builder.toString();
 	}
 
-	public void save(SQLiteDatabase db, String table_name) {
+	public int save(SQLiteDatabase db, String table_name) {
 		if (bindings.size() < 1) {
 			throw new IllegalStateException("At least one binding is required");
 		}
@@ -90,6 +90,13 @@ public class ColumnBinder {
 		query_builder.delete(query_builder.length() - 2, query_builder.length())
 				.append(");");
 		db.execSQL(query_builder.toString(), bindargs.toArray());
+		Cursor cursor = db.rawQuery("SELECT last_insert_rowid()", null);
+		int id = -1;
+		if(cursor.moveToNext()){
+			id = cursor.getInt(0);
+		}
+		cursor.close();
+		return id;
 	}
 
 	public Integer[] queryRowsMatchingParameters(SQLiteDatabase db, String table_name, HashMap<String, Object> search_parameters) {

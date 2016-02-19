@@ -1,6 +1,7 @@
 package com.orf4450.frcscouter.pit;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -9,13 +10,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.*;
+import android.widget.*;
+import com.orf4450.frcscouter.TimedConfirmation;
+import com.orf4450.frcscouter.UploadActivity;
 import com.orf4450.frcscouter.db.ColumnBinder;
+import com.orf4450.frcscouter.db.PitDB;
 import com.orf4450.frcscouter.db.TextViewColumnBinding;
 import com.orf4450.scouter.R;
 
@@ -27,10 +27,12 @@ import java.io.IOException;
  *         Created on 2/10/2016
  */
 public class PitScouting extends Activity {
+	private PitDB database;
 	private SharedPreferences settings;
 	private TextView team_number;
 	private TextView team_name;
 	private ImageView image_view;
+	private ColumnBinder column_bindings;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,17 +42,18 @@ public class PitScouting extends Activity {
 		LinearLayout temp = new LinearLayout(this);
 		View post_load = inflater.inflate(R.layout.pit_scouting, temp);
 
-		ColumnBinder column_bindings = new ColumnBinder();
+		column_bindings = new ColumnBinder();
 		team_number = (TextView) post_load.findViewById(R.id.pit_team_number);
 		column_bindings.add(new TextViewColumnBinding(team_number, "team_number", "INT", 4, false, null));
 		team_name = (TextView) post_load.findViewById(R.id.pit_team_name);
 		column_bindings.add(new TextViewColumnBinding(team_name, "team_name", 64));
+		column_bindings.add(new TextViewColumnBinding((TextView) post_load.findViewById(R.id.robot_description), "robot_description", "TEXT"));
+		database = new PitDB(this, column_bindings);
 		post_load.findViewById(R.id.take_picture).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if (team_number.getText().toString().trim().isEmpty()) {
-					Toast toast = Toast.makeText(PitScouting.this, "Please specify the team number", Toast.LENGTH_SHORT);
-					toast.show();
+					team_number.setError("This field is required");
 					team_number.requestFocus();
 					return;
 				}
@@ -86,6 +89,77 @@ public class PitScouting extends Activity {
 		if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
 			setPic(current_photo_file);
 		}
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.stand_menu, menu);
+		menu.findItem(R.id.delete_all).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				final Dialog dialog = new Dialog(PitScouting.this, android.R.style.Theme_DeviceDefault_Dialog_NoActionBar);
+				dialog.setContentView(R.layout.delete_all);
+				final ProgressBar progress_bar = (ProgressBar) dialog.findViewById(R.id.progress_delete_all);
+				new TimedConfirmation(3000, progress_bar, new Runnable() {
+					@Override
+					public void run() {
+						runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								dialog.dismiss();
+								Toast toast = Toast.makeText(PitScouting.this, "Deleting", Toast.LENGTH_SHORT);
+								toast.show();
+								database.deleteAllData();
+								toast = Toast.makeText(PitScouting.this, "All data deleted", Toast.LENGTH_SHORT);
+								toast.show();
+							}
+						});
+					}
+				});
+				dialog.show();
+				return false;
+			}
+		});
+		menu.findItem(R.id.save).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				Toast toast = Toast.makeText(PitScouting.this, "Saving", Toast.LENGTH_SHORT);
+				toast.show();
+				database.save();
+				resetFields();
+				toast = Toast.makeText(PitScouting.this, "Saved", Toast.LENGTH_SHORT);
+				toast.show();
+				return false;
+			}
+		});
+		menu.findItem(R.id.reset).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				resetFields();
+				return true;
+			}
+		});
+		menu.findItem(R.id.upload).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				startActivity(new Intent(PitScouting.this, UploadActivity.class));
+				return true;
+			}
+		});
+		menu.findItem(R.id.auto_upload).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				item.setChecked(!item.isChecked());
+				settings.edit().putBoolean("auto_upload", item.isChecked()).apply();
+				return true;
+			}
+		}).setChecked(settings.getBoolean("auto_upload", true));
+		return true;
+	}
+
+	public void resetFields() {
+		column_bindings.resetAll();
 	}
 
 	private void setPic(File file) {

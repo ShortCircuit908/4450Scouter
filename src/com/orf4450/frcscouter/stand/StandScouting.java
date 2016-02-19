@@ -220,35 +220,6 @@ public class StandScouting extends Activity {
 				return true;
 			}
 		});
-		menu.findItem(R.id.delete_all).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-			@Override
-			public boolean onMenuItemClick(MenuItem item) {
-				final Dialog dialog = new Dialog(StandScouting.this);
-				dialog.setContentView(R.layout.delete_all);
-				final ProgressBar progress_bar = (ProgressBar) dialog.findViewById(R.id.progress_delete_all);
-				// Create a progress bar-based timed confirmation system
-				new TimedConfirmation(3000, progress_bar, new Runnable() {
-					@Override
-					public void run() {
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								// Delete all data
-								Toast toast = Toast.makeText(StandScouting.this, "Deleting...", Toast.LENGTH_SHORT);
-								toast.show();
-								database.deleteAllData();
-								resetFields();
-								toast = Toast.makeText(StandScouting.this, "Deleting...", Toast.LENGTH_SHORT);
-								toast.show();
-								dialog.dismiss();
-							}
-						});
-					}
-				});
-				dialog.show();
-				return false;
-			}
-		});
 		menu.findItem(R.id.auto_upload).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {

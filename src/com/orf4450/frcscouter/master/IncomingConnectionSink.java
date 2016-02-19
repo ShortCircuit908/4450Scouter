@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.widget.ArrayAdapter;
 import com.shortcircuit.nbn.Nugget;
+import com.shortcircuit.nbn.nugget.NuggetCompound;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -40,7 +41,9 @@ public class IncomingConnectionSink implements Runnable {
 					@Override
 					public void onDataRecieved(Nugget<?> data) {
 						try {
-							database.saveNugget(data);
+							NuggetCompound compound = (NuggetCompound)data;
+							database.saveNugget(compound.getNugget("stand_scouting"));
+							database.saveNugget(compound.getNugget("pit_scouting"));
 							if(activity.shouldAutoUpload()){
 								activity.uploadSilent();
 							}

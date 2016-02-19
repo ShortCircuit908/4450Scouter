@@ -1,79 +1,74 @@
 package com.orf4450.frcscouter.master;
 
 import android.content.Context;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.orf4450.frcscouter.pit.PitTeam;
+import com.orf4450.frcscouter.stand.Match;
 import com.shortcircuit.nbn.Nugget;
+import com.shortcircuit.nbn.nugget.NuggetArray;
+import com.shortcircuit.nbn.nugget.NuggetCompound;
 
 import java.io.*;
+import java.lang.reflect.Type;
+import java.util.List;
 
 /**
  * @author Caleb Milligan
  *         Created on 2/17/2016
  */
 public class MasterDB {
-	private final File data_dir;
+	private static final Gson gson = new GsonBuilder().serializeNulls().enableComplexMapKeySerialization().create();
+	private static final Type bundle_type = new TypeToken<DataBundle>() {
+	}.getType();
 	private long file_id = 0;
+	private final File data_dir;
 
 	public MasterDB(Context context) {
 		data_dir = new File(context.getApplicationInfo().dataDir);
 	}
 
-	public void upload(OutputStream out) {
+	public void upload(OutputStream out) throws IOException {
+		DataBundle bundle = new DataBundle();
 		for (File file : data_dir.listFiles()) {
-			if (!file.exists() || file.length() == 0) {
-				file.delete();
-				continue;
-			}
 			try {
-				Nugget.writeNugget(Nugget.readNugget(new DataInputStream(new FileInputStream(file))), new DataOutputStream(out));
+				NuggetArray<List<Nugget<?>>, NuggetCompound> nugget = Nugget.readNugget(new DataInputStream(new FileInputStream(file)));
+				if (nugget.getName().equals("stand_scouting")) {
+					for (NuggetCompound compound : nugget.getValue()) {
+						bundle.addMatch(new Match(compound));
+					}
+				}
+				else {
+					for (NuggetCompound compound : nugget.getValue()) {
+						bundle.addTeam(new PitTeam(compound));
+					}
+				}
 				file.delete();
 			}
 			catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
+		PrintStream print = new PrintStream(out);
+		gson.toJson(bundle, bundle_type, print);
+		print.flush();
+		print.close();
 	}
 
-	public void deleteAllData(){
-
+	public void deleteAllData() {
+		for (File file : data_dir.listFiles()) {
+			file.delete();
+		}
 	}
 
-	public void saveNugget(/*NuggetArray<List<Nugget<?>>, NuggetCompound> nugget*/ Nugget<?> nugget) throws IOException {
+	public void saveNugget(Nugget<?> nugget) throws IOException {
+		if (nugget == null) {
+			return;
+		}
 		File file = getNextAvailableFile();
 		file.createNewFile();
 		Nugget.writeNugget(nugget, new DataOutputStream(new FileOutputStream(file)));
-		/*
-		if(nugget.getValue() == null){
-			return;
-		}
-		if(nugget.getValue().length == 0){
-			return;
-		}
-		NuggetCompound first_compound = nugget.getValue()[0];
-		StringBuilder query_builder = new StringBuilder("INSERT INTO `").append(table_name)
-				.append("` (");
-		for(String name : first_compound.getNuggetNames()){
-			query_builder.append('`').append(name).append("`, ");
-		}
-		query_builder.delete(query_builder.length() - 2, query_builder.length());
-		query_builder.append(") VALUES (");
-		Object[] bindargs = new Object[nugget.getValue().length * first_compound.getSize()];
-		for(int i = 0; i < bindargs.length; i++){
-			NuggetCompound compound = nugget.getValue()[i];
-			if(compound.getValue() == null || compound.getValue().isEmpty()){
-				continue;
-			}
-			query_builder.append('(');
-			for(int j = 0; j < compound.getSize(); j++){
-				query_builder.append("?, ");
-				bindargs[i * compound.getSize() + j] = compound.getNugget(j);
-			}
-			query_builder.delete(query_builder.length() - 2, query_builder.length());
-			query_builder.append("), ");
-		}
-		query_builder.delete(query_builder.length() - 2, query_builder.length());
-		SQLiteDatabase db = getWritableDatabase();
-		db.execSQL(query_builder.toString(), bindargs);
-		*/
 	}
 
 	private File getNextAvailableFile() {

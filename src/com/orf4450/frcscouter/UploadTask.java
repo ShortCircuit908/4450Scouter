@@ -45,7 +45,9 @@ public class UploadTask implements Runnable {
 		catch (Throwable e) {
 			thrown = e;
 		}
-		System.out.println("thrown = " + thrown);
+		if(thrown != null){
+			thrown.printStackTrace();
+		}
 		callback.onUploadFinished(thrown);
 	}
 }

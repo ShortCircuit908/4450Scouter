@@ -39,7 +39,7 @@ public class UploadActivity extends Activity {
 		bluetooth_manager = (BluetoothManager)getSystemService(BLUETOOTH_SERVICE);
 		//bluetooth_manager.getConnectedDevices(BluetoothProfile.GATT_SERVER);
 		Set<BluetoothDevice> devices = bluetooth_manager.getAdapter().getBondedDevices();
-		ArrayAdapter<RemoteDeviceWrapper> list_adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+		list_adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
 		for(BluetoothDevice device : devices){
 			list_adapter.add(new RemoteDeviceWrapper(device));
 		}
@@ -56,7 +56,7 @@ public class UploadActivity extends Activity {
 				if (bluetooth_manager.getAdapter().isDiscovering()) {
 					bluetooth_manager.getAdapter().cancelDiscovery();
 				}
-				BluetoothDevice device = UploadActivity.this.list_adapter.getItem(position).getDevice();
+				BluetoothDevice device = list_adapter.getItem(position).getDevice();
 				new UploadTask(device, new UploadCallback() {
 					@Override
 					public void onUploadFinished(final Throwable e) {

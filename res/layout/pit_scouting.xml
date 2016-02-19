@@ -44,5 +44,13 @@
             android:layout_height="wrap_content"
             android:id="@+id/pit_team_name"
             android:hint="Team Name" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:id="@+id/robot_description"
+            android:hint="Robot description" />
     </LinearLayout>
 </LinearLayout>
