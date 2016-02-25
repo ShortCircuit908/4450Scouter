@@ -20,9 +20,11 @@
         android:title="Delete Local Data"
         android:id="@+id/delete_all"
         android:showAsAction="never" />
+    <!--
     <item
         android:title="Auto-upload"
         android:checkable="true"
         android:id="@+id/auto_upload"
         android:showAsAction="never" />
+    -->
 </menu>

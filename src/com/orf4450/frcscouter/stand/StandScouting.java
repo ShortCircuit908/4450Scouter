@@ -2,6 +2,7 @@ package com.orf4450.frcscouter.stand;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -99,7 +100,10 @@ public class StandScouting extends Activity {
 
 		column_bindings.add(new NumberPickerColumnBinding(low_goal_scored, "low_goals"));
 
-		column_bindings.add(new RadioGroupColumnBinding((RadioGroup) post_load.findViewById(R.id.radio_group_endgame), "endgame", ScouterConstants.endgame_bindings));
+		column_bindings.add(new RadioGroupColumnBinding(
+				(RadioGroup) post_load.findViewById(R.id.radio_group_endgame),
+				"endgame",
+				ScouterConstants.endgame_bindings));
 
 		database = new StandDB(this, column_bindings);
 
@@ -122,7 +126,7 @@ public class StandScouting extends Activity {
 				final Dialog dialog = new Dialog(StandScouting.this, android.R.style.Theme_DeviceDefault_Dialog_NoActionBar);
 				dialog.setContentView(R.layout.delete_all);
 				final ProgressBar progress_bar = (ProgressBar) dialog.findViewById(R.id.progress_delete_all);
-				new TimedConfirmation(3000, progress_bar, new Runnable() {
+				final TimedConfirmation confirmation = new TimedConfirmation(3000, progress_bar, new Runnable() {
 					@Override
 					public void run() {
 						runOnUiThread(new Runnable() {
@@ -136,6 +140,18 @@ public class StandScouting extends Activity {
 								toast.show();
 							}
 						});
+					}
+				});
+				dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+					@Override
+					public void onDismiss(DialogInterface dialog) {
+						confirmation.exit();
+					}
+				});
+				dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+					@Override
+					public void onCancel(DialogInterface dialog) {
+						confirmation.exit();
 					}
 				});
 				dialog.show();
@@ -220,19 +236,14 @@ public class StandScouting extends Activity {
 				return true;
 			}
 		});
-		menu.findItem(R.id.auto_upload).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-			@Override
-			public boolean onMenuItemClick(MenuItem item) {
-				item.setChecked(!item.isChecked());
-				settings.edit().putBoolean("auto_upload", item.isChecked()).apply();
-				return true;
-			}
-		}).setChecked(settings.getBoolean("auto_upload", true));
 		return true;
 	}
 
 	public void resetFields() {
+		TextViewColumnBinding team_name = column_bindings.get(R.id.team_name);
+		CharSequence name = team_name.getValue();
 		column_bindings.resetAll();
 		((TextViewColumnBinding) column_bindings.get(R.id.match_number)).setValue((database.getLastMatchNumber() + 1) + "");
+		team_name.setValue(name);
 	}
 }

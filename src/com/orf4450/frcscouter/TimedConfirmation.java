@@ -67,4 +67,8 @@ public class TimedConfirmation extends Thread {
 		});
 		Looper.loop();
 	}
+
+	public void exit(){
+		handler.getLooper().quit();
+	}
 }

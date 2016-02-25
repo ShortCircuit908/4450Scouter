@@ -3,8 +3,8 @@ package com.orf4450.frcscouter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
@@ -25,7 +25,6 @@ public class UploadActivity extends Activity {
 	private StandDB stand_db;
 	private PitDB pit_db;
 	private Dialog status_dialog;
-	private BluetoothManager bluetooth_manager;
 	private ListView list_devices;
 	private ArrayAdapter<RemoteDeviceWrapper> list_adapter;
 
@@ -36,9 +35,9 @@ public class UploadActivity extends Activity {
 		pit_db = new PitDB(this, null);
 		stand_db = new StandDB(this, null);
 
-		bluetooth_manager = (BluetoothManager)getSystemService(BLUETOOTH_SERVICE);
+		BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
 		//bluetooth_manager.getConnectedDevices(BluetoothProfile.GATT_SERVER);
-		Set<BluetoothDevice> devices = bluetooth_manager.getAdapter().getBondedDevices();
+		Set<BluetoothDevice> devices = adapter.getBondedDevices();
 		list_adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
 		for(BluetoothDevice device : devices){
 			list_adapter.add(new RemoteDeviceWrapper(device));
@@ -53,13 +52,16 @@ public class UploadActivity extends Activity {
 				status_dialog = new Dialog(UploadActivity.this);
 				status_dialog.setContentView(R.layout.upload_status);
 				status_dialog.show();
-				if (bluetooth_manager.getAdapter().isDiscovering()) {
-					bluetooth_manager.getAdapter().cancelDiscovery();
-				}
 				BluetoothDevice device = list_adapter.getItem(position).getDevice();
 				new UploadTask(device, new UploadCallback() {
 					@Override
 					public void onUploadFinished(final Throwable e) {
+						runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								status_dialog.dismiss();
+							}
+						});
 						if (e != null) {
 							UploadActivity.this.runOnUiThread(new Runnable() {
 								@Override

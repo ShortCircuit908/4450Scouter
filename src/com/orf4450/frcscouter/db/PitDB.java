@@ -7,7 +7,10 @@ import android.database.sqlite.SQLiteException;
 import android.os.Environment;
 import com.orf4450.scouter.R;
 import com.shortcircuit.nbn.Nugget;
-import com.shortcircuit.nbn.nugget.*;
+import com.shortcircuit.nbn.nugget.NuggetArray;
+import com.shortcircuit.nbn.nugget.NuggetCompound;
+import com.shortcircuit.nbn.nugget.NuggetInteger;
+import com.shortcircuit.nbn.nugget.NuggetString;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -48,6 +51,25 @@ public class PitDB extends ScouterDB {
 
 	public void save() {
 		TextViewColumnBinding team_number = column_binder.get(R.id.pit_team_number);
+		TextViewColumnBinding team_name = column_binder.get(R.id.pit_team_name);
+		boolean validated = true;
+		if (team_number.getValue().toString().trim().isEmpty()) {
+			team_number.setError("This field is required");
+			validated = false;
+		}
+		else {
+			team_number.setError(null);
+		}
+		if (team_name.getValue().toString().trim().isEmpty()) {
+			team_name.setError("This field is required");
+			validated = false;
+		}
+		else {
+			team_name.setError(null);
+		}
+		if (!validated) {
+			return;
+		}
 		SQLiteDatabase db = getWritableDatabase();
 		db.execSQL("DELETE FROM `" + SCOUTING_TABLE_NAME + "` WHERE `team_number`=?", new Object[]{Integer.parseInt(team_number.getValue() + "")});
 		column_binder.save(db, SCOUTING_TABLE_NAME);
@@ -80,13 +102,17 @@ public class PitDB extends ScouterDB {
 			if (cursor.getCount() > 0) {
 				int i = 0;
 				while (cursor.moveToNext()) {
+					int team_number = cursor.getInt(1);
 					NuggetCompound compound = new NuggetCompound();
-					compound.addNugget(new NuggetInteger("team_number", cursor.getInt(1)));
+					compound.addNugget(new NuggetInteger("team_number", team_number));
 					compound.addNugget(new NuggetString("team_name", cursor.getString(2)));
 					compound.addNugget(new NuggetString("robot_description", cursor.getString(3)));
-					String file_name = "ROBOT_" + cursor.getInt(1) + ".jpg";
-					File storage_dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-					compound.addNugget(new NuggetFile("robot_image", new File(storage_dir, file_name)));
+					/*
+					File image_file = PitScouting.getImageFile(team_number);
+					if(image_file.exists()){
+						compound.addNugget(new NuggetFile("image", image_file));
+					}
+					*/
 					compounds[i++] = compound;
 				}
 			}

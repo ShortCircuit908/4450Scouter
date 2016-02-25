@@ -43,7 +43,7 @@
                     android:inputType="text"
                     android:ems="10"
                     android:id="@+id/team_name"
-                    android:hint="Team name" />
+                    android:hint="Scouter name" />
             </LinearLayout>
 
             <RelativeLayout

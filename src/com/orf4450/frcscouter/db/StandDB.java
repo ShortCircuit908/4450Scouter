@@ -46,6 +46,7 @@ public class StandDB extends ScouterDB {
 	public void saveMatch() {
 		TextViewColumnBinding match_number = column_binder.get(R.id.match_number);
 		TextViewColumnBinding team_number = column_binder.get(R.id.team_number);
+		TextViewColumnBinding team_name = column_binder.get(R.id.team_name);
 		boolean validated = true;
 		if (match_number.getValue().toString().trim().isEmpty()) {
 			match_number.setError("This field is required");
@@ -53,6 +54,13 @@ public class StandDB extends ScouterDB {
 		}
 		else {
 			match_number.setError(null);
+		}
+		if (team_name.getValue().toString().trim().isEmpty()) {
+			team_name.setError("This field is required");
+			validated = false;
+		}
+		else {
+			team_name.setError(null);
 		}
 		if (team_number.getValue().toString().trim().isEmpty()) {
 			team_number.setError("This field is required");
@@ -174,15 +182,7 @@ public class StandDB extends ScouterDB {
 								compound.addNugget(new NuggetString(name, cursor.getString(j)));
 								continue;
 							case Cursor.FIELD_TYPE_BLOB:
-								try {
-									compound.addNugget(NuggetFactory.toNugget(name, cursor.getBlob(j), byte[].class));
-								}
-								catch (IllegalAccessException e) {
-									e.printStackTrace();
-								}
-								catch (InstantiationException e) {
-									e.printStackTrace();
-								}
+								compound.addNugget(NuggetFactory.wrapNuggetArray(cursor.getBlob(j)));
 						}
 					}
 					compounds[i++] = compound;

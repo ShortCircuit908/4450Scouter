@@ -1,6 +1,7 @@
 package com.orf4450.frcscouter.master;
 
 import android.content.Context;
+import android.os.Environment;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -24,9 +25,12 @@ public class MasterDB {
 	}.getType();
 	private long file_id = 0;
 	private final File data_dir;
+	private final Context context;
 
 	public MasterDB(Context context) {
-		data_dir = new File(context.getApplicationInfo().dataDir);
+		data_dir = new File(Environment.getExternalStorageDirectory() + "/scouting_data");
+		data_dir.mkdirs();
+		this.context = context;
 	}
 
 	public void upload(OutputStream out) throws IOException {
@@ -40,11 +44,32 @@ public class MasterDB {
 					}
 				}
 				else {
-					for (NuggetCompound compound : nugget.getValue()) {
+					for (final NuggetCompound compound : nugget.getValue()) {
 						bundle.addTeam(new PitTeam(compound));
+						/*
+						NuggetFile image_nugget = (NuggetFile) compound.removeNugget("image");
+						if (image_nugget != null) {
+							final File image_file = image_nugget.getValue();
+							final String file_name = image_nugget.getFileName();
+							if (image_file.exists()) {
+								UploadScheduler.scheduleTask(new ImageUploadTask(new UploadTask.Callback() {
+									@Override
+									public void onUploadFinished(Throwable e) {
+										if (e == null) {
+											Toast.makeText(context, "Uploaded " + file_name, Toast.LENGTH_SHORT).show();
+											image_file.delete();
+										}
+										else {
+											Toast.makeText(context, "Failed to upload " + file_name, Toast.LENGTH_SHORT).show();
+											e.printStackTrace();
+										}
+									}
+								}, image_file, file_name));
+							}
+						}
+						*/
 					}
 				}
-				file.delete();
 			}
 			catch (IOException e) {
 				e.printStackTrace();
@@ -73,7 +98,7 @@ public class MasterDB {
 
 	private File getNextAvailableFile() {
 		File file;
-		while ((file = new File(data_dir + "\\data_" + file_id++ + ".nbn")).exists()) {
+		while ((file = new File(data_dir + "/data_" + file_id++ + ".nbn")).exists()) {
 			// Do nothing
 		}
 		return file;

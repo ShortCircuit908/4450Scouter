@@ -2,6 +2,7 @@ package com.orf4450.frcscouter.pit;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -20,7 +21,6 @@ import com.orf4450.frcscouter.db.TextViewColumnBinding;
 import com.orf4450.scouter.R;
 
 import java.io.File;
-import java.io.IOException;
 
 /**
  * @author Caleb Milligan
@@ -70,17 +70,9 @@ public class PitScouting extends Activity {
 	private void dispatchTakePictureIntent() {
 		Intent capture_image_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		if (capture_image_intent.resolveActivity(getPackageManager()) != null) {
-			current_photo_file = null;
-			try {
-				current_photo_file = createImageFile();
-			}
-			catch (IOException ex) {
-				ex.printStackTrace();
-			}
-			if (current_photo_file != null) {
-				capture_image_intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(current_photo_file));
-				startActivityForResult(capture_image_intent, REQUEST_TAKE_PHOTO);
-			}
+			current_photo_file = getImageFile(team_number.getText().toString().trim());
+			capture_image_intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(current_photo_file));
+			startActivityForResult(capture_image_intent, REQUEST_TAKE_PHOTO);
 		}
 	}
 
@@ -94,14 +86,14 @@ public class PitScouting extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.stand_menu, menu);
+		inflater.inflate(R.menu.pit_menu, menu);
 		menu.findItem(R.id.delete_all).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {
 				final Dialog dialog = new Dialog(PitScouting.this, android.R.style.Theme_DeviceDefault_Dialog_NoActionBar);
 				dialog.setContentView(R.layout.delete_all);
 				final ProgressBar progress_bar = (ProgressBar) dialog.findViewById(R.id.progress_delete_all);
-				new TimedConfirmation(3000, progress_bar, new Runnable() {
+				final TimedConfirmation confirmation = new TimedConfirmation(3000, progress_bar, new Runnable() {
 					@Override
 					public void run() {
 						runOnUiThread(new Runnable() {
@@ -115,6 +107,18 @@ public class PitScouting extends Activity {
 								toast.show();
 							}
 						});
+					}
+				});
+				dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+					@Override
+					public void onDismiss(DialogInterface dialog) {
+						confirmation.exit();
+					}
+				});
+				dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+					@Override
+					public void onCancel(DialogInterface dialog) {
+						confirmation.exit();
 					}
 				});
 				dialog.show();
@@ -147,19 +151,12 @@ public class PitScouting extends Activity {
 				return true;
 			}
 		});
-		menu.findItem(R.id.auto_upload).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-			@Override
-			public boolean onMenuItemClick(MenuItem item) {
-				item.setChecked(!item.isChecked());
-				settings.edit().putBoolean("auto_upload", item.isChecked()).apply();
-				return true;
-			}
-		}).setChecked(settings.getBoolean("auto_upload", true));
 		return true;
 	}
 
 	public void resetFields() {
 		column_bindings.resetAll();
+		image_view.setImageResource(android.R.color.transparent);
 	}
 
 	private void setPic(File file) {
@@ -181,8 +178,8 @@ public class PitScouting extends Activity {
 		image_view.setImageBitmap(bitmap);
 	}
 
-	private File createImageFile() throws IOException {
-		String file_name = "ROBOT_" + team_number.getText() + ".jpg";
+	public static File getImageFile(Object team_number) {
+		String file_name = "ROBOT_" + team_number + ".jpg";
 		File storage_dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 		return new File(storage_dir, file_name);
 	}

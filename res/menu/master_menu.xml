@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:title="Upload"
-        android:id="@+id/save"
+        android:id="@+id/upload"
         android:showAsAction="always" />
     <item
         android:title="Delete Local Data"
