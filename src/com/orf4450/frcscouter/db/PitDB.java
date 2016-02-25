@@ -5,12 +5,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.Environment;
+import com.orf4450.frcscouter.pit.PitScouting;
 import com.orf4450.scouter.R;
 import com.shortcircuit.nbn.Nugget;
-import com.shortcircuit.nbn.nugget.NuggetArray;
-import com.shortcircuit.nbn.nugget.NuggetCompound;
-import com.shortcircuit.nbn.nugget.NuggetInteger;
-import com.shortcircuit.nbn.nugget.NuggetString;
+import com.shortcircuit.nbn.nugget.*;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -107,12 +105,10 @@ public class PitDB extends ScouterDB {
 					compound.addNugget(new NuggetInteger("team_number", team_number));
 					compound.addNugget(new NuggetString("team_name", cursor.getString(2)));
 					compound.addNugget(new NuggetString("robot_description", cursor.getString(3)));
-					/*
 					File image_file = PitScouting.getImageFile(team_number);
 					if(image_file.exists()){
 						compound.addNugget(new NuggetFile("image", image_file));
 					}
-					*/
 					compounds[i++] = compound;
 				}
 			}

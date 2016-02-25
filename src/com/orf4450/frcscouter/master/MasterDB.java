@@ -2,6 +2,7 @@ package com.orf4450.frcscouter.master;
 
 import android.content.Context;
 import android.os.Environment;
+import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -10,6 +11,7 @@ import com.orf4450.frcscouter.stand.Match;
 import com.shortcircuit.nbn.Nugget;
 import com.shortcircuit.nbn.nugget.NuggetArray;
 import com.shortcircuit.nbn.nugget.NuggetCompound;
+import com.shortcircuit.nbn.nugget.NuggetFile;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -46,7 +48,6 @@ public class MasterDB {
 				else {
 					for (final NuggetCompound compound : nugget.getValue()) {
 						bundle.addTeam(new PitTeam(compound));
-						/*
 						NuggetFile image_nugget = (NuggetFile) compound.removeNugget("image");
 						if (image_nugget != null) {
 							final File image_file = image_nugget.getValue();
@@ -67,7 +68,6 @@ public class MasterDB {
 								}, image_file, file_name));
 							}
 						}
-						*/
 					}
 				}
 			}
