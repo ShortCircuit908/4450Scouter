@@ -9,12 +9,15 @@ import java.util.concurrent.TimeUnit;
  *         Created on 2/22/2016
  */
 public class UploadScheduler implements Runnable {
-	private static final ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(4);
+	private static final ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(8);
 	private static final LinkedList<UploadTask> queue = new LinkedList<>();
-	private static final UploadScheduler instance = new UploadScheduler();
+	static{
+		new UploadScheduler();
+	}
 
 	public static void scheduleTask(UploadTask task) {
 		synchronized (queue) {
+			System.out.println("========UPLOAD TASK QUEUED========");
 			queue.add(task);
 		}
 	}
@@ -32,6 +35,7 @@ public class UploadScheduler implements Runnable {
 	public void run() {
 		synchronized (queue) {
 			if (!queue.isEmpty()) {
+				System.out.println("========EXECUTING UPLOAD TASK========");
 				UploadTask task = queue.pop();
 				new Thread(task).start();
 			}
