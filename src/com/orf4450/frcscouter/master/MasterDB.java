@@ -91,6 +91,7 @@ public class MasterDB {
 		if (nugget == null) {
 			return;
 		}
+		System.out.println(nugget.toString());
 		File file = getNextAvailableFile();
 		file.createNewFile();
 		Nugget.writeNugget(nugget, new DataOutputStream(new FileOutputStream(file)));

@@ -127,7 +127,9 @@ public class PitDB extends ScouterDB {
 				// Do nothing;
 			}
 		}
-		return new NuggetArray<>(SCOUTING_TABLE_NAME, compounds);
+		NuggetArray<?, ?> nugget = new NuggetArray<>(SCOUTING_TABLE_NAME, compounds);
+		System.out.println(nugget.toString());
+		return nugget;
 	}
 
 	public void resetUploaded() {
