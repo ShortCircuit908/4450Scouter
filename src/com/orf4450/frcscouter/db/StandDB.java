@@ -105,9 +105,11 @@ public class StandDB extends ScouterDB {
 	}
 
 	public void deleteAllData() {
-		if(column_binder != null) {
-			SQLiteDatabase db = getWritableDatabase();
-			db.execSQL("DELETE FROM `" + SCOUTING_TABLE_NAME + "`");
+		try{
+			getWritableDatabase().execSQL("DELETE FROM `" + SCOUTING_TABLE_NAME + "`");
+		}
+		catch (Exception e){
+			e.printStackTrace();
 		}
 	}
 
@@ -146,17 +148,20 @@ public class StandDB extends ScouterDB {
 	}
 
 	public void upload(OutputStream out) throws IOException {
-		if(column_binder != null) {
+		try{
 			Nugget<?> nugget = toNugget();
 			Nugget.writeNugget(nugget, new DataOutputStream(out));
 			getWritableDatabase().execSQL("UPDATE `" + SCOUTING_TABLE_NAME + "` SET `uploaded`=1");
+		}
+		catch (Exception e){
+			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public Nugget<?> toNugget() {
 		NuggetCompound[] compounds = new NuggetCompound[0];
-		if (column_binder != null) {
+		try{
 			try {
 				StringBuilder query_builder = new StringBuilder("SELECT * FROM `").append(SCOUTING_TABLE_NAME)
 						.append("` WHERE `uploaded`=0");
@@ -195,6 +200,9 @@ public class StandDB extends ScouterDB {
 				// Do nothing;
 			}
 		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
 		return new NuggetArray<>(SCOUTING_TABLE_NAME, compounds);
 	}
 
@@ -214,8 +222,11 @@ public class StandDB extends ScouterDB {
 	}
 
 	public void resetUploaded() {
-		if (column_binder != null) {
+		try{
 			getWritableDatabase().execSQL("UPDATE `" + SCOUTING_TABLE_NAME + "` SET `uploaded`=0");
+		}
+		catch (Exception e){
+			e.printStackTrace();
 		}
 	}
 }

@@ -3,7 +3,6 @@ package com.orf4450.frcscouter.db;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.os.Environment;
 import com.orf4450.frcscouter.pit.PitScouting;
 import com.orf4450.scouter.R;
@@ -78,7 +77,7 @@ public class PitDB extends ScouterDB {
 	}
 
 	public void deleteAllData() {
-		if (column_binder != null) {
+		try{
 			getWritableDatabase().execSQL("DELETE FROM `" + SCOUTING_TABLE_NAME + "`");
 			File storage_dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 			for (File file : storage_dir.listFiles()) {
@@ -87,54 +86,59 @@ public class PitDB extends ScouterDB {
 				}
 			}
 		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void upload(OutputStream out) throws IOException {
-		if (column_binder != null) {
+		try{
 			Nugget<?> nugget = toNugget();
 			Nugget.writeNugget(nugget, new DataOutputStream(out));
 			getWritableDatabase().execSQL("UPDATE `" + SCOUTING_TABLE_NAME + "` SET `uploaded`=1");
+		}
+		catch (Exception e){
+			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public Nugget<?> toNugget() {
 		NuggetCompound[] compounds = new NuggetCompound[0];
-		if (column_binder != null) {
-			try {
-				SQLiteDatabase db = getReadableDatabase();
-				Cursor cursor = db.rawQuery("SELECT * FROM `" + SCOUTING_TABLE_NAME + "` WHERE `uploaded`=0", null);
-				compounds = new NuggetCompound[cursor.getCount()];
-				if (cursor.getCount() > 0) {
-					int i = 0;
-					while (cursor.moveToNext()) {
-						int team_number = cursor.getInt(1);
-						NuggetCompound compound = new NuggetCompound();
-						compound.addNugget(new NuggetInteger("team_number", team_number));
-						compound.addNugget(new NuggetString("team_name", cursor.getString(2)));
-						compound.addNugget(new NuggetString("robot_description", cursor.getString(3)));
-						File image_file = PitScouting.getImageFile(team_number);
-						if (image_file.exists()) {
-							compound.addNugget(new NuggetFile("image", image_file));
-						}
-						compounds[i++] = compound;
+		try {
+			SQLiteDatabase db = getReadableDatabase();
+			Cursor cursor = db.rawQuery("SELECT * FROM `" + SCOUTING_TABLE_NAME + "` WHERE `uploaded`=0", null);
+			compounds = new NuggetCompound[cursor.getCount()];
+			if (cursor.getCount() > 0) {
+				int i = 0;
+				while (cursor.moveToNext()) {
+					int team_number = cursor.getInt(1);
+					NuggetCompound compound = new NuggetCompound();
+					compound.addNugget(new NuggetInteger("team_number", team_number));
+					compound.addNugget(new NuggetString("team_name", cursor.getString(2)));
+					compound.addNugget(new NuggetString("robot_description", cursor.getString(3)));
+					File image_file = PitScouting.getImageFile(team_number);
+					if (image_file.exists()) {
+						compound.addNugget(new NuggetFile("image", image_file));
 					}
+					compounds[i++] = compound;
 				}
-				cursor.close();
 			}
-			catch (SQLiteException e) {
-				// Do nothing;
-			}
+			cursor.close();
 		}
-		NuggetArray<?, ?> nugget = new NuggetArray<>(SCOUTING_TABLE_NAME, compounds);
-		System.out.println(nugget.toString());
-		return nugget;
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new NuggetArray<>(SCOUTING_TABLE_NAME, compounds);
 	}
 
 	public void resetUploaded() {
-		if (column_binder != null) {
+		try{
 			getWritableDatabase().execSQL("UPDATE `" + SCOUTING_TABLE_NAME + "` SET `uploaded`=0");
+		}
+		catch (Exception e){
+			e.printStackTrace();
 		}
 	}
 }

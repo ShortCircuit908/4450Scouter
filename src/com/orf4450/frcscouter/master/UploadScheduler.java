@@ -17,7 +17,6 @@ public class UploadScheduler implements Runnable {
 
 	public static void scheduleTask(UploadTask task) {
 		synchronized (queue) {
-			System.out.println("========UPLOAD TASK QUEUED========");
 			queue.add(task);
 		}
 	}
@@ -35,7 +34,6 @@ public class UploadScheduler implements Runnable {
 	public void run() {
 		synchronized (queue) {
 			if (!queue.isEmpty()) {
-				System.out.println("========EXECUTING UPLOAD TASK========");
 				UploadTask task = queue.pop();
 				new Thread(task).start();
 			}
