@@ -161,12 +161,14 @@ public class StandScouting extends Activity {
 		menu.findItem(R.id.save).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {
-				Toast toast = Toast.makeText(StandScouting.this, "Saving", Toast.LENGTH_SHORT);
-				toast.show();
-				database.saveMatch();
-				resetFields();
-				toast = Toast.makeText(StandScouting.this, "Saved", Toast.LENGTH_SHORT);
-				toast.show();
+				Toast.makeText(StandScouting.this, "Saving", Toast.LENGTH_SHORT).show();
+				if(database.saveMatch()) {
+					resetFields();
+					Toast.makeText(StandScouting.this, "Saved", Toast.LENGTH_SHORT).show();
+				}
+				else{
+					Toast.makeText(StandScouting.this, "Save failed", Toast.LENGTH_SHORT).show();
+				}
 				return false;
 			}
 		});

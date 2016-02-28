@@ -100,11 +100,9 @@ public class PitScouting extends Activity {
 							@Override
 							public void run() {
 								dialog.dismiss();
-								Toast toast = Toast.makeText(PitScouting.this, "Deleting", Toast.LENGTH_SHORT);
-								toast.show();
+								Toast.makeText(PitScouting.this, "Deleting", Toast.LENGTH_SHORT).show();
 								database.deleteAllData();
-								toast = Toast.makeText(PitScouting.this, "All data deleted", Toast.LENGTH_SHORT);
-								toast.show();
+								Toast.makeText(PitScouting.this, "All data deleted", Toast.LENGTH_SHORT).show();
 							}
 						});
 					}
@@ -128,12 +126,14 @@ public class PitScouting extends Activity {
 		menu.findItem(R.id.save).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {
-				Toast toast = Toast.makeText(PitScouting.this, "Saving", Toast.LENGTH_SHORT);
-				toast.show();
-				database.save();
-				resetFields();
-				toast = Toast.makeText(PitScouting.this, "Saved", Toast.LENGTH_SHORT);
-				toast.show();
+				Toast.makeText(PitScouting.this, "Saving", Toast.LENGTH_SHORT).show();
+				if(database.save()) {
+					resetFields();
+					Toast.makeText(PitScouting.this, "Saved", Toast.LENGTH_SHORT).show();
+				}
+				else{
+					Toast.makeText(PitScouting.this, "Save failed", Toast.LENGTH_SHORT).show();
+				}
 				return false;
 			}
 		});
