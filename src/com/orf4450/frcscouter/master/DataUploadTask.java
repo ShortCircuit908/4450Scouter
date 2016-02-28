@@ -1,6 +1,6 @@
 package com.orf4450.frcscouter.master;
 
-import android.content.Context;
+import android.app.Activity;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -13,7 +13,7 @@ import java.net.URL;
 public class DataUploadTask extends UploadTask{
 	private final MasterDB database_helper;
 
-	public DataUploadTask(Context context, Callback callback) {
+	public DataUploadTask(Activity context, Callback callback) {
 		super(callback);
 		database_helper = new MasterDB(context);
 	}
