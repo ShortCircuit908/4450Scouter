@@ -1,6 +1,6 @@
 package com.orf4450.frcscouter.master;
 
-import android.content.Context;
+import android.app.Activity;
 import android.os.Environment;
 import android.widget.Toast;
 import com.google.gson.Gson;
@@ -27,9 +27,9 @@ public class MasterDB {
 	}.getType();
 	private long file_id = 0;
 	private final File data_dir;
-	private final Context context;
+	private final Activity context;
 
-	public MasterDB(Context context) {
+	public MasterDB(Activity context) {
 		data_dir = new File(Environment.getExternalStorageDirectory() + "/scouting_data");
 		data_dir.mkdirs();
 		this.context = context;
@@ -55,15 +55,20 @@ public class MasterDB {
 							if (image_file.exists()) {
 								UploadScheduler.scheduleTask(new ImageUploadTask(new UploadTask.Callback() {
 									@Override
-									public void onUploadFinished(Throwable e) {
-										if (e == null) {
-											Toast.makeText(context, "Uploaded " + file_name, Toast.LENGTH_SHORT).show();
-											image_file.delete();
-										}
-										else {
-											Toast.makeText(context, "Failed to upload " + file_name, Toast.LENGTH_SHORT).show();
-											e.printStackTrace();
-										}
+									public void onUploadFinished(final Throwable e) {
+										context.runOnUiThread(new Runnable() {
+											@Override
+											public void run() {
+												if (e == null) {
+													Toast.makeText(context, "Uploaded " + file_name, Toast.LENGTH_SHORT).show();
+													image_file.delete();
+												}
+												else {
+													Toast.makeText(context, "Failed to upload " + file_name, Toast.LENGTH_SHORT).show();
+													e.printStackTrace();
+												}
+											}
+										});
 									}
 								}, image_file, file_name));
 							}
