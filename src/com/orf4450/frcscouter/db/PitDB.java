@@ -97,6 +97,7 @@ public class PitDB extends ScouterDB {
 			Nugget<?> nugget = toNugget();
 			Nugget.writeNugget(nugget, new DataOutputStream(out));
 			getWritableDatabase().execSQL("UPDATE `" + SCOUTING_TABLE_NAME + "` SET `uploaded`=1");
+			deleteAllData();
 		}
 		catch (Exception e){
 			e.printStackTrace();
