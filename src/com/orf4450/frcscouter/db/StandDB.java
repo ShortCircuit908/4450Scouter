@@ -44,7 +44,7 @@ public class StandDB extends ScouterDB {
 	}
 
 	public boolean saveMatch() {
-		if(column_binder != null) {
+		if (column_binder != null) {
 			TextViewColumnBinding match_number = column_binder.get(R.id.match_number);
 			TextViewColumnBinding team_number = column_binder.get(R.id.team_number);
 			TextViewColumnBinding team_name = column_binder.get(R.id.team_name);
@@ -95,7 +95,7 @@ public class StandDB extends ScouterDB {
 	}
 
 	public void loadMatch(MatchDescriptor descriptor) {
-		if(column_binder != null) {
+		if (column_binder != null) {
 			HashMap<String, Object> search_params = new HashMap<>(2);
 			search_params.put(column_binder.get(R.id.match_number).getColumnName(), descriptor.getMatchNumber());
 			search_params.put(column_binder.get(R.id.team_number).getColumnName(), descriptor.getTeamNumber());
@@ -105,17 +105,17 @@ public class StandDB extends ScouterDB {
 	}
 
 	public void deleteAllData() {
-		try{
+		try {
 			getWritableDatabase().execSQL("DELETE FROM `" + SCOUTING_TABLE_NAME + "`");
 		}
-		catch (Exception e){
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	public ArrayList<MatchDescriptor> getAllStoredMatches() {
 		ArrayList<MatchDescriptor> descriptors = new ArrayList<>(0);
-		if(column_binder != null) {
+		if (column_binder != null) {
 			String match_number_column = column_binder.get(R.id.match_number).getColumnName();
 			StringBuilder query_builder = new StringBuilder("SELECT `").append(match_number_column).append("`, `")
 					.append(column_binder.get(R.id.team_number).getColumnName()).append("` FROM `").append(SCOUTING_TABLE_NAME)
@@ -132,7 +132,7 @@ public class StandDB extends ScouterDB {
 	}
 
 	public int getLastMatchNumber() {
-		if(column_binder != null) {
+		if (column_binder != null) {
 			String match_number_column = column_binder.get(R.id.match_number).getColumnName();
 			SQLiteDatabase db = getReadableDatabase();
 			Cursor cursor = db.rawQuery("SELECT `" + match_number_column + "` FROM `" + SCOUTING_TABLE_NAME
@@ -148,12 +148,15 @@ public class StandDB extends ScouterDB {
 	}
 
 	public void upload(OutputStream out) throws IOException {
-		try{
+		try {
 			Nugget<?> nugget = toNugget();
 			Nugget.writeNugget(nugget, new DataOutputStream(out));
 			getWritableDatabase().execSQL("UPDATE `" + SCOUTING_TABLE_NAME + "` SET `uploaded`=1");
 		}
-		catch (Exception e){
+		catch (IOException e) {
+			throw e;
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -161,7 +164,7 @@ public class StandDB extends ScouterDB {
 	@Override
 	public Nugget<?> toNugget() {
 		NuggetCompound[] compounds = new NuggetCompound[0];
-		try{
+		try {
 			try {
 				StringBuilder query_builder = new StringBuilder("SELECT * FROM `").append(SCOUTING_TABLE_NAME)
 						.append("` WHERE `uploaded`=0");
@@ -200,7 +203,7 @@ public class StandDB extends ScouterDB {
 				// Do nothing;
 			}
 		}
-		catch (Exception e){
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		return new NuggetArray<>(SCOUTING_TABLE_NAME, compounds);
@@ -222,10 +225,10 @@ public class StandDB extends ScouterDB {
 	}
 
 	public void resetUploaded() {
-		try{
+		try {
 			getWritableDatabase().execSQL("UPDATE `" + SCOUTING_TABLE_NAME + "` SET `uploaded`=0");
 		}
-		catch (Exception e){
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

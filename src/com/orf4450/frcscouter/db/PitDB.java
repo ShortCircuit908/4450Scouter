@@ -99,6 +99,9 @@ public class PitDB extends ScouterDB {
 			getWritableDatabase().execSQL("UPDATE `" + SCOUTING_TABLE_NAME + "` SET `uploaded`=1");
 			deleteAllData();
 		}
+		catch (IOException e){
+			throw e;
+		}
 		catch (Exception e){
 			e.printStackTrace();
 		}
