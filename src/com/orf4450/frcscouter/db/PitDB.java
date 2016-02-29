@@ -77,7 +77,7 @@ public class PitDB extends ScouterDB {
 	}
 
 	public void deleteAllData() {
-		try{
+		try {
 			getWritableDatabase().execSQL("DELETE FROM `" + SCOUTING_TABLE_NAME + "`");
 			File storage_dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 			for (File file : storage_dir.listFiles()) {
@@ -86,23 +86,32 @@ public class PitDB extends ScouterDB {
 				}
 			}
 		}
-		catch (Exception e){
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public void upload(OutputStream out) throws IOException {
-		try{
+		try {
 			Nugget<?> nugget = toNugget();
 			Nugget.writeNugget(nugget, new DataOutputStream(out));
-			getWritableDatabase().execSQL("UPDATE `" + SCOUTING_TABLE_NAME + "` SET `uploaded`=1");
+			setUploaded();
 			deleteAllData();
 		}
-		catch (IOException e){
+		catch (IOException e) {
 			throw e;
 		}
-		catch (Exception e){
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void setUploaded() {
+		try {
+			getWritableDatabase().execSQL("UPDATE `" + SCOUTING_TABLE_NAME + "` SET `uploaded`=1");
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -138,10 +147,10 @@ public class PitDB extends ScouterDB {
 	}
 
 	public void resetUploaded() {
-		try{
+		try {
 			getWritableDatabase().execSQL("UPDATE `" + SCOUTING_TABLE_NAME + "` SET `uploaded`=0");
 		}
-		catch (Exception e){
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

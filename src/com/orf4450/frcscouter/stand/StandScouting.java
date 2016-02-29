@@ -11,7 +11,10 @@ import android.widget.*;
 import com.orf4450.frcscouter.TimedConfirmation;
 import com.orf4450.frcscouter.UploadActivity;
 import com.orf4450.frcscouter.db.*;
+import com.orf4450.frcscouter.master.MasterDB;
 import com.orf4450.scouter.R;
+
+import java.io.IOException;
 
 /**
  * @author Caleb Milligan
@@ -235,6 +238,36 @@ public class StandScouting extends Activity {
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {
 				startActivity(new Intent(StandScouting.this, UploadActivity.class));
+				return true;
+			}
+		});
+		menu.findItem(R.id.export).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				Toast.makeText(StandScouting.this, "Exporting", Toast.LENGTH_SHORT).show();
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							new MasterDB(StandScouting.this).saveNugget(database.toNugget());
+							database.setUploaded();
+							StandScouting.this.runOnUiThread(new Runnable() {
+								@Override
+								public void run() {
+									Toast.makeText(StandScouting.this, "Exported", Toast.LENGTH_SHORT).show();
+								}
+							});
+						}
+						catch (IOException e) {
+							StandScouting.this.runOnUiThread(new Runnable() {
+								@Override
+								public void run() {
+									Toast.makeText(StandScouting.this, "Export failed", Toast.LENGTH_SHORT).show();
+								}
+							});
+						}
+					}
+				}).start();
 				return true;
 			}
 		});

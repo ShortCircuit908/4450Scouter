@@ -161,6 +161,15 @@ public class StandDB extends ScouterDB {
 		}
 	}
 
+	public void setUploaded() {
+		try {
+			getWritableDatabase().execSQL("UPDATE `" + SCOUTING_TABLE_NAME + "` SET `uploaded`=1");
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	@Override
 	public Nugget<?> toNugget() {
 		NuggetCompound[] compounds = new NuggetCompound[0];
@@ -182,7 +191,7 @@ public class StandDB extends ScouterDB {
 									compound.addNugget(new NuggetDouble(name, cursor.getDouble(j)));
 									continue;
 								case Cursor.FIELD_TYPE_INTEGER:
-									compound.addNugget(new NuggetLong(name, cursor.getLong(j)));
+									compound.addNugget(new NuggetShort(name, cursor.getShort(j)));
 									continue;
 								case Cursor.FIELD_TYPE_NULL:
 									compound.addNugget(new NuggetString(name));

@@ -24,7 +24,7 @@ public class ImageUploadTask extends UploadTask {
 	@Override
 	public void run() {
 		try {
-			if (file.exists()) {
+			if(file.exists()){
 				HttpURLConnection connection = (HttpURLConnection) new URL(MasterActivity.IMAGE_UPLOAD_URL + "?filename=" + file_name).openConnection();
 				connection.setRequestMethod("POST");
 				connection.setRequestProperty("User-Agent", "4450Scouting/1.0");
@@ -32,9 +32,10 @@ public class ImageUploadTask extends UploadTask {
 				connection.connect();
 				FileInputStream in = new FileInputStream(file);
 				OutputStream out = connection.getOutputStream();
-				int cur_byte;
-				while ((cur_byte = in.read()) != -1) {
-					out.write(cur_byte);
+				int n;
+				byte[] buffer = new byte[4096];
+				while ((n = in.read(buffer)) > -1) {
+					out.write(buffer, 0, n);
 				}
 				out.flush();
 				out.close();

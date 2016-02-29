@@ -78,6 +78,7 @@ public class MasterDB {
 			}
 			catch (IOException e) {
 				e.printStackTrace();
+				throw e;
 			}
 		}
 		PrintStream print = new PrintStream(out);
