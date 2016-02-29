@@ -174,7 +174,7 @@ public class StandDB extends ScouterDB {
 									compound.addNugget(new NuggetDouble(name, cursor.getDouble(j)));
 									continue;
 								case Cursor.FIELD_TYPE_INTEGER:
-									compound.addNugget(new NuggetLong(name, cursor.getLong(j)));
+									compound.addNugget(new NuggetShort(name, cursor.getShort(j)));
 									continue;
 								case Cursor.FIELD_TYPE_NULL:
 									compound.addNugget(new NuggetString(name));

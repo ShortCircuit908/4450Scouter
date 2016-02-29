@@ -73,6 +73,7 @@ public class MasterDB {
 			}
 			catch (IOException e) {
 				e.printStackTrace();
+				throw e;
 			}
 		}
 		PrintStream print = new PrintStream(out);
@@ -91,6 +92,7 @@ public class MasterDB {
 		if (nugget == null) {
 			return;
 		}
+		System.out.println(nugget);
 		File file = getNextAvailableFile();
 		file.createNewFile();
 		Nugget.writeNugget(nugget, new DataOutputStream(new FileOutputStream(file)));

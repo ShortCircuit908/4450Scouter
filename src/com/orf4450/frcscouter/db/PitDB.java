@@ -7,10 +7,7 @@ import android.database.sqlite.SQLiteException;
 import android.os.Environment;
 import com.orf4450.scouter.R;
 import com.shortcircuit.nbn.Nugget;
-import com.shortcircuit.nbn.nugget.NuggetArray;
-import com.shortcircuit.nbn.nugget.NuggetCompound;
-import com.shortcircuit.nbn.nugget.NuggetInteger;
-import com.shortcircuit.nbn.nugget.NuggetString;
+import com.shortcircuit.nbn.nugget.*;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -111,9 +108,9 @@ public class PitDB extends ScouterDB {
 				if (cursor.getCount() > 0) {
 					int i = 0;
 					while (cursor.moveToNext()) {
-						int team_number = cursor.getInt(1);
+						short team_number = cursor.getShort(1);
 						NuggetCompound compound = new NuggetCompound();
-						compound.addNugget(new NuggetInteger("team_number", team_number));
+						compound.addNugget(new NuggetShort("team_number", team_number));
 						compound.addNugget(new NuggetString("team_name", cursor.getString(2)));
 						compound.addNugget(new NuggetString("robot_description", cursor.getString(3)));
 					/*

@@ -9,6 +9,10 @@
         android:id="@+id/reset"
         android:showAsAction="ifRoom" />
     <item
+        android:title="Local Export"
+        android:id="@+id/export"
+        android:showAsAction="never" />
+    <item
         android:title="Upload"
         android:id="@+id/upload"
         android:showAsAction="never" />

@@ -18,9 +18,11 @@ import com.orf4450.frcscouter.UploadActivity;
 import com.orf4450.frcscouter.db.ColumnBinder;
 import com.orf4450.frcscouter.db.PitDB;
 import com.orf4450.frcscouter.db.TextViewColumnBinding;
+import com.orf4450.frcscouter.master.MasterDB;
 import com.orf4450.scouter.R;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * @author Caleb Milligan
@@ -120,7 +122,7 @@ public class PitScouting extends Activity {
 					}
 				});
 				dialog.show();
-				return false;
+				return true;
 			}
 		});
 		menu.findItem(R.id.save).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -134,7 +136,7 @@ public class PitScouting extends Activity {
 				else{
 					Toast.makeText(PitScouting.this, "Save failed", Toast.LENGTH_SHORT).show();
 				}
-				return false;
+				return true;
 			}
 		});
 		menu.findItem(R.id.reset).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -148,6 +150,20 @@ public class PitScouting extends Activity {
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {
 				startActivity(new Intent(PitScouting.this, UploadActivity.class));
+				return true;
+			}
+		});
+		menu.findItem(R.id.export).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				try {
+					Toast.makeText(PitScouting.this, "Exporting", Toast.LENGTH_SHORT).show();
+					new MasterDB(PitScouting.this).saveNugget(database.toNugget());
+					Toast.makeText(PitScouting.this, "Exported", Toast.LENGTH_SHORT).show();
+				}
+				catch (IOException e) {
+					Toast.makeText(PitScouting.this, "Export failed", Toast.LENGTH_SHORT).show();
+				}
 				return true;
 			}
 		});
