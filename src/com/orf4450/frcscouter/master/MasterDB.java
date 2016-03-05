@@ -16,6 +16,8 @@ import com.shortcircuit.nbn.nugget.NuggetFile;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.zip.DeflaterOutputStream;
+import java.util.zip.InflaterInputStream;
 
 /**
  * @author Caleb Milligan
@@ -39,7 +41,7 @@ public class MasterDB {
 		DataBundle bundle = new DataBundle();
 		for (File file : data_dir.listFiles()) {
 			try {
-				NuggetArray<List<Nugget<?>>, NuggetCompound> nugget = Nugget.readNugget(new DataInputStream(new FileInputStream(file)));
+				NuggetArray<List<Nugget<?>>, NuggetCompound> nugget = Nugget.readNugget(new DataInputStream(new InflaterInputStream(new FileInputStream(file))));
 				if (nugget.getName().equals("stand_scouting")) {
 					for (NuggetCompound compound : nugget.getValue()) {
 						bundle.addMatch(new Match(compound));
@@ -94,12 +96,16 @@ public class MasterDB {
 	}
 
 	public void saveNugget(Nugget<?> nugget) throws IOException {
+		System.out.println("nugget = " + nugget);
 		if (nugget == null) {
 			return;
 		}
 		File file = getNextAvailableFile();
 		file.createNewFile();
-		Nugget.writeNugget(nugget, new DataOutputStream(new FileOutputStream(file)));
+		DataOutputStream out = new DataOutputStream(new DeflaterOutputStream(new FileOutputStream(file)));
+		Nugget.writeNugget(nugget, out);
+		out.flush();
+		out.close();
 	}
 
 	private File getNextAvailableFile() {

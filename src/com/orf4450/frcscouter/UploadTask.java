@@ -8,6 +8,7 @@ import com.shortcircuit.nbn.nugget.NuggetCompound;
 
 import java.io.DataOutputStream;
 import java.util.UUID;
+import java.util.zip.DeflaterOutputStream;
 
 /**
  * @author Caleb Milligan
@@ -32,7 +33,7 @@ public class UploadTask implements Runnable {
 			BluetoothSocket socket = device.createRfcommSocketToServiceRecord(
 					UUID.fromString("7674047e-6e47-4bf0-831f-209e3f9dd23f"));
 			socket.connect();
-			DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+			DataOutputStream out = new DataOutputStream(new DeflaterOutputStream(socket.getOutputStream()));
 			NuggetCompound nugget = new NuggetCompound("scouting_data");
 			for(ScouterDB database : databases) {
 				nugget.addNugget(database.toNugget());

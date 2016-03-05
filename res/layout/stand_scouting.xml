@@ -81,23 +81,23 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/radio_group_pickup">
 
-                        <RadioButton
+                        <com.orf4450.frcscouter.ToggleableRadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Fast (&lt;3sec)"
                             android:id="@+id/auto_pickup_fast" />
 
-                        <RadioButton
+                        <com.orf4450.frcscouter.ToggleableRadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Medium (>3sec, &lt;5sec)"
+                            android:text="Medium (&gt;3sec, &lt;5sec)"
                             android:id="@+id/auto_pickup_medium"
                             android:checked="false" />
 
-                        <RadioButton
+                        <com.orf4450.frcscouter.ToggleableRadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Slow (>5 sec)"
+                            android:text="Slow (&gt;5 sec)"
                             android:id="@+id/auto_pickup_slow" />
                     </RadioGroup>
                 </LinearLayout>

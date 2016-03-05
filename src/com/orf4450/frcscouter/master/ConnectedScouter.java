@@ -7,6 +7,7 @@ import com.shortcircuit.nbn.Nugget;
 
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.util.zip.InflaterInputStream;
 
 /**
  * @author Caleb Milligan
@@ -25,7 +26,7 @@ public class ConnectedScouter implements Runnable {
 		this.socket = socket;
 		this.callback = callback;
 		this.list_adapter = list_adapter;
-		this.in = new DataInputStream(socket.getInputStream());
+		this.in = new DataInputStream(new InflaterInputStream(socket.getInputStream()));
 		this.device_wrapper = new RemoteDeviceWrapper(socket.getRemoteDevice());
 		context.runOnUiThread(new Runnable() {
 			@Override
