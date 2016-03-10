@@ -48,7 +48,7 @@ public class StandScouting extends Activity {
 
 		column_bindings.add(new TextViewColumnBinding((TextView) post_load.findViewById(R.id.team_number), "team_number", "INT", 4, false, null));
 
-		column_bindings.add(new TextViewColumnBinding((TextView) post_load.findViewById(R.id.team_name), "team_name", "VARCHAR", 64));
+		column_bindings.add(new TextViewColumnBinding((TextView) post_load.findViewById(R.id.team_name), "scouter_name", "VARCHAR", 64));
 
 		column_bindings.add(new TextViewColumnBinding((TextView) post_load.findViewById(R.id.autonomous_behavior), "autonomous_behavior"));
 
@@ -108,6 +108,31 @@ public class StandScouting extends Activity {
 				"endgame",
 				ScouterConstants.endgame_bindings));
 
+		bindPicker((NumberPicker) post_load.findViewById(R.id.number_picker_obstacles_0), "portcullis_crosses");
+
+		bindPicker((NumberPicker) post_load.findViewById(R.id.number_picker_obstacles_1), "chival_crosses");
+
+		bindPicker((NumberPicker) post_load.findViewById(R.id.number_picker_obstacles_2), "moat_crosses");
+
+		bindPicker((NumberPicker) post_load.findViewById(R.id.number_picker_obstacles_3), "ramparts_crosses");
+
+		bindPicker((NumberPicker) post_load.findViewById(R.id.number_picker_obstacles_4), "drawbridge_crosses");
+
+		bindPicker((NumberPicker) post_load.findViewById(R.id.number_picker_obstacles_5), "sally_crosses");
+
+		bindPicker((NumberPicker) post_load.findViewById(R.id.number_picker_obstacles_6), "rock_crosses");
+
+		bindPicker((NumberPicker) post_load.findViewById(R.id.number_picker_obstacles_7), "rough_crosses");
+
+		bindPicker((NumberPicker) post_load.findViewById(R.id.number_picker_obstacles_8), "low_crosses");
+
+		column_bindings.add(new CompoundButtonColumnBinding((CheckBox) post_load.findViewById(R.id.check_no_show), "no_show"));
+
+		column_bindings.add(new CompoundButtonColumnBinding((CheckBox) post_load.findViewById(R.id.check_dof), "died_on_field"));
+
+		column_bindings.add(new CompoundButtonColumnBinding((CheckBox) post_load.findViewById(R.id.defended), "defended"));
+
+		column_bindings.add(new TextViewColumnBinding((TextView)post_load.findViewById(R.id.notes), "notes"));
 		database = new StandDB(this, column_bindings);
 
 		resetFields();
@@ -165,11 +190,11 @@ public class StandScouting extends Activity {
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {
 				Toast.makeText(StandScouting.this, "Saving", Toast.LENGTH_SHORT).show();
-				if(database.saveMatch()) {
+				if (database.saveMatch()) {
 					resetFields();
 					Toast.makeText(StandScouting.this, "Saved", Toast.LENGTH_SHORT).show();
 				}
-				else{
+				else {
 					Toast.makeText(StandScouting.this, "Save failed", Toast.LENGTH_SHORT).show();
 				}
 				return false;
@@ -272,6 +297,13 @@ public class StandScouting extends Activity {
 			}
 		});
 		return true;
+	}
+
+	private void bindPicker(NumberPicker picker, String column_name) {
+		picker.setMaxValue(0);
+		picker.setMaxValue(99);
+		picker.setWrapSelectorWheel(false);
+		column_bindings.add(new NumberPickerColumnBinding(picker, column_name));
 	}
 
 	public void resetFields() {

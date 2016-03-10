@@ -7,6 +7,7 @@ import android.os.Environment;
 import com.orf4450.frcscouter.pit.PitScouting;
 import com.orf4450.scouter.R;
 import com.shortcircuit.nbn.Nugget;
+import com.shortcircuit.nbn.NuggetFactory;
 import com.shortcircuit.nbn.nugget.*;
 
 import java.io.DataOutputStream;
@@ -35,6 +36,7 @@ public class PitDB extends ScouterDB {
 	public void onCreate(SQLiteDatabase db) {
 		if (column_binder != null) {
 			String asb = column_binder.generateSchema(SCOUTING_TABLE_NAME);
+			System.out.println(asb);
 			for (String abs : asb.split(";")) {
 				db.execSQL(abs);
 			}
@@ -120,18 +122,35 @@ public class PitDB extends ScouterDB {
 	public Nugget<?> toNugget() {
 		NuggetCompound[] compounds = new NuggetCompound[0];
 		try {
+			StringBuilder query_builder = new StringBuilder("SELECT * FROM `").append(SCOUTING_TABLE_NAME)
+					.append("` WHERE `uploaded`=0");
 			SQLiteDatabase db = getReadableDatabase();
-			Cursor cursor = db.rawQuery("SELECT * FROM `" + SCOUTING_TABLE_NAME + "` WHERE `uploaded`=0", null);
+			Cursor cursor = db.rawQuery(query_builder.toString(), null);
 			compounds = new NuggetCompound[cursor.getCount()];
 			if (cursor.getCount() > 0) {
 				int i = 0;
 				while (cursor.moveToNext()) {
-					int team_number = cursor.getInt(1);
 					NuggetCompound compound = new NuggetCompound();
-					compound.addNugget(new NuggetInteger("team_number", team_number));
-					compound.addNugget(new NuggetString("team_name", cursor.getString(2)));
-					compound.addNugget(new NuggetString("robot_description", cursor.getString(3)));
-					File image_file = PitScouting.getImageFile(team_number);
+					for (int j = 1; j < cursor.getColumnCount(); j++) {
+						String name = cursor.getColumnName(j);
+						switch (cursor.getType(j)) {
+							case Cursor.FIELD_TYPE_FLOAT:
+								compound.addNugget(new NuggetDouble(name, cursor.getDouble(j)));
+								continue;
+							case Cursor.FIELD_TYPE_INTEGER:
+								compound.addNugget(new NuggetShort(name, cursor.getShort(j)));
+								continue;
+							case Cursor.FIELD_TYPE_NULL:
+								compound.addNugget(new NuggetString(name));
+								continue;
+							case Cursor.FIELD_TYPE_STRING:
+								compound.addNugget(new NuggetString(name, cursor.getString(j)));
+								continue;
+							case Cursor.FIELD_TYPE_BLOB:
+								compound.addNugget(NuggetFactory.wrapNuggetArray(cursor.getBlob(j)));
+						}
+					}
+					File image_file = PitScouting.getImageFile(compound.getNugget("team_number").getValue());
 					if (image_file.exists()) {
 						compound.addNugget(new NuggetFile("image", image_file));
 					}

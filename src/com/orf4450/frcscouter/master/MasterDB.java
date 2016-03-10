@@ -96,7 +96,6 @@ public class MasterDB {
 	}
 
 	public void saveNugget(Nugget<?> nugget) throws IOException {
-		System.out.println("nugget = " + nugget);
 		if (nugget == null) {
 			return;
 		}

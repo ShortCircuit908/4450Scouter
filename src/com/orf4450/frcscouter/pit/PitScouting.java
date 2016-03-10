@@ -50,6 +50,12 @@ public class PitScouting extends Activity {
 		team_name = (TextView) post_load.findViewById(R.id.pit_team_name);
 		column_bindings.add(new TextViewColumnBinding(team_name, "team_name", 64));
 		column_bindings.add(new TextViewColumnBinding((TextView) post_load.findViewById(R.id.robot_description), "robot_description", "TEXT"));
+		column_bindings.add(new TextViewColumnBinding((TextView)post_load.findViewById(R.id.autonomous_notes), "auto_notes"));
+		column_bindings.add(new TextViewColumnBinding((TextView)post_load.findViewById(R.id.defense_notes), "defense_notes"));
+		column_bindings.add(new TextViewColumnBinding((TextView)post_load.findViewById(R.id.drive_base_notes), "drive_base_notes"));
+		column_bindings.add(new TextViewColumnBinding((TextView)post_load.findViewById(R.id.pickup_notes), "pickup_notes"));
+		column_bindings.add(new TextViewColumnBinding((TextView)post_load.findViewById(R.id.shooting_notes), "shooting_notes"));
+
 		database = new PitDB(this, column_bindings);
 		post_load.findViewById(R.id.take_picture).setOnClickListener(new View.OnClickListener() {
 			@Override

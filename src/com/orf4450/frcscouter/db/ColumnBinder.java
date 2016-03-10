@@ -36,9 +36,9 @@ public class ColumnBinder {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T extends AbstractColumnBinding<?, ?>> T get(int view_id) {
+	public <T extends AbstractColumnBinding<?, ?>> T get(int viewid) {
 		for (AbstractColumnBinding<?, ?> binding : bindings) {
-			if (binding.getView().getId() == view_id) {
+			if (binding.getView().getId() == viewid) {
 				return (T) binding;
 			}
 		}
@@ -54,7 +54,7 @@ public class ColumnBinder {
 				.append("`;")
 				.append("CREATE TABLE `")
 				.append(table_name)
-				.append("` (`_id` INTEGER PRIMARY KEY");
+				.append("` (`id` INTEGER PRIMARY KEY");
 		for (AbstractColumnBinding<?, ?> binding : bindings) {
 			builder.append(", `").append(binding.getColumnName()).append("` ").append(binding.getColumnClass());
 			if (binding.getColumnLength() > -1) {
@@ -100,7 +100,7 @@ public class ColumnBinder {
 	}
 
 	public Integer[] queryRowsMatchingParameters(SQLiteDatabase db, String table_name, HashMap<String, Object> search_parameters) {
-		StringBuilder query_builder = new StringBuilder("SELECT `_id` FROM `")
+		StringBuilder query_builder = new StringBuilder("SELECT `id` FROM `")
 				.append(table_name).append("`");
 		appendWhereClause(query_builder, search_parameters);
 		query_builder.append(';');
@@ -148,7 +148,7 @@ public class ColumnBinder {
 
 	@SuppressWarnings("unchecked")
 	public void load(SQLiteDatabase db, String table_name, int id) {
-		Cursor cursor = db.rawQuery("SELECT * FROM `" + table_name + "` WHERE `_id`=" + id, null);
+		Cursor cursor = db.rawQuery("SELECT * FROM `" + table_name + "` WHERE `id`=" + id, null);
 		if (cursor.moveToNext()) {
 			for (AbstractColumnBinding binding : bindings) {
 				int column_index = cursor.getColumnIndexOrThrow(binding.getColumnName());

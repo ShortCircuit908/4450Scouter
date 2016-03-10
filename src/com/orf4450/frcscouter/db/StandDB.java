@@ -3,7 +3,6 @@ package com.orf4450.frcscouter.db;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import com.orf4450.frcscouter.stand.MatchDescriptor;
 import com.orf4450.scouter.R;
 import com.shortcircuit.nbn.Nugget;
@@ -37,6 +36,7 @@ public class StandDB extends ScouterDB {
 	public void onCreate(SQLiteDatabase db) {
 		if (column_binder != null) {
 			String asb = column_binder.generateSchema(SCOUTING_TABLE_NAME);
+			System.out.println(asb);
 			for (String abs : asb.split(";")) {
 				db.execSQL(abs);
 			}
@@ -174,43 +174,38 @@ public class StandDB extends ScouterDB {
 	public Nugget<?> toNugget() {
 		NuggetCompound[] compounds = new NuggetCompound[0];
 		try {
-			try {
-				StringBuilder query_builder = new StringBuilder("SELECT * FROM `").append(SCOUTING_TABLE_NAME)
-						.append("` WHERE `uploaded`=0");
-				SQLiteDatabase db = getReadableDatabase();
-				Cursor cursor = db.rawQuery(query_builder.toString(), null);
-				compounds = new NuggetCompound[cursor.getCount()];
-				if (cursor.getCount() > 0) {
-					int i = 0;
-					while (cursor.moveToNext()) {
-						NuggetCompound compound = new NuggetCompound();
-						for (int j = 1; j < cursor.getColumnCount(); j++) {
-							String name = cursor.getColumnName(j);
-							switch (cursor.getType(j)) {
-								case Cursor.FIELD_TYPE_FLOAT:
-									compound.addNugget(new NuggetDouble(name, cursor.getDouble(j)));
-									continue;
-								case Cursor.FIELD_TYPE_INTEGER:
-									compound.addNugget(new NuggetShort(name, cursor.getShort(j)));
-									continue;
-								case Cursor.FIELD_TYPE_NULL:
-									compound.addNugget(new NuggetString(name));
-									continue;
-								case Cursor.FIELD_TYPE_STRING:
-									compound.addNugget(new NuggetString(name, cursor.getString(j)));
-									continue;
-								case Cursor.FIELD_TYPE_BLOB:
-									compound.addNugget(NuggetFactory.wrapNuggetArray(cursor.getBlob(j)));
-							}
+			StringBuilder query_builder = new StringBuilder("SELECT * FROM `").append(SCOUTING_TABLE_NAME)
+					.append("` WHERE `uploaded`=0");
+			SQLiteDatabase db = getReadableDatabase();
+			Cursor cursor = db.rawQuery(query_builder.toString(), null);
+			compounds = new NuggetCompound[cursor.getCount()];
+			if (cursor.getCount() > 0) {
+				int i = 0;
+				while (cursor.moveToNext()) {
+					NuggetCompound compound = new NuggetCompound();
+					for (int j = 1; j < cursor.getColumnCount(); j++) {
+						String name = cursor.getColumnName(j);
+						switch (cursor.getType(j)) {
+							case Cursor.FIELD_TYPE_FLOAT:
+								compound.addNugget(new NuggetDouble(name, cursor.getDouble(j)));
+								continue;
+							case Cursor.FIELD_TYPE_INTEGER:
+								compound.addNugget(new NuggetShort(name, cursor.getShort(j)));
+								continue;
+							case Cursor.FIELD_TYPE_NULL:
+								compound.addNugget(new NuggetString(name));
+								continue;
+							case Cursor.FIELD_TYPE_STRING:
+								compound.addNugget(new NuggetString(name, cursor.getString(j)));
+								continue;
+							case Cursor.FIELD_TYPE_BLOB:
+								compound.addNugget(NuggetFactory.wrapNuggetArray(cursor.getBlob(j)));
 						}
-						compounds[i++] = compound;
 					}
+					compounds[i++] = compound;
 				}
-				cursor.close();
 			}
-			catch (SQLiteException e) {
-				// Do nothing;
-			}
+			cursor.close();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -222,14 +217,14 @@ public class StandDB extends ScouterDB {
 		if (column_binder != null) {
 			String match_number = column_binder.get(R.id.match_number).getColumnName();
 			String team_number = column_binder.get(R.id.team_number).getColumnName();
-			Cursor cursor = getReadableDatabase().rawQuery("SELECT `_id` FROM `" + SCOUTING_TABLE_NAME + "` WHERE `"
+			Cursor cursor = getReadableDatabase().rawQuery("SELECT `id` FROM `" + SCOUTING_TABLE_NAME + "` WHERE `"
 					+ match_number + "`=" + descriptor.getMatchNumber() + " AND `" + team_number
 					+ "`=" + descriptor.getTeamNumber(), null);
 			if (!cursor.moveToNext()) {
 				return;
 			}
 			int id = cursor.getInt(0);
-			getWritableDatabase().execSQL("DELETE FROM `" + SCOUTING_TABLE_NAME + "` WHERE `_id`=?", new Object[]{id});
+			getWritableDatabase().execSQL("DELETE FROM `" + SCOUTING_TABLE_NAME + "` WHERE `id`=?", new Object[]{id});
 		}
 	}
 

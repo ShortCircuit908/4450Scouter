@@ -9,7 +9,7 @@ import android.widget.CompoundButton;
  */
 public class CompoundButtonColumnBinding extends AbstractColumnBinding<CompoundButton, Boolean> {
 	public CompoundButtonColumnBinding(CompoundButton view, String column_name) {
-		super(view, column_name, Boolean.class, "BOOLEAN", -1, false, null);
+		super(view, column_name, Boolean.class, "TINYINT", -1, false, null);
 	}
 
 	@Override
