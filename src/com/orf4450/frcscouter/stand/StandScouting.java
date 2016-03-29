@@ -130,18 +130,19 @@ public class StandScouting extends Activity {
 
 		column_bindings.add(new CompoundButtonColumnBinding((CheckBox) post_load.findViewById(R.id.check_dof), "died_on_field"));
 
+		column_bindings.add(new CompoundButtonColumnBinding((CheckBox)post_load.findViewById(R.id.check_no_alliance), "no_alliance"));
+
 		column_bindings.add(new CompoundButtonColumnBinding((CheckBox) post_load.findViewById(R.id.defended), "defended"));
 
 		column_bindings.add(new TextViewColumnBinding((TextView)post_load.findViewById(R.id.notes), "notes"));
+
+		column_bindings.add(new TextViewColumnBinding((TextView)post_load.findViewById(R.id.no_alliance_reason), "no_alliance_reason"));
+
 		database = new StandDB(this, column_bindings);
 
 		resetFields();
 
 		setContentView(post_load);
-	}
-
-	public boolean shouldAutoUpload() {
-		return settings.getBoolean("auto_upload", true);
 	}
 
 	@Override

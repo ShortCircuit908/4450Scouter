@@ -71,6 +71,17 @@
                 android:layout_toStartOf="@+id/linearLayout"
                 android:hint="Notes" />
 
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:id="@+id/no_alliance_reason"
+                android:layout_below="@+id/notes"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@+id/linearLayout"
+                android:hint="Reason for No Alliance (if applicable)" />
+
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
@@ -100,6 +111,12 @@
                         android:layout_height="wrap_content"
                         android:text="Died on Field"
                         android:id="@+id/check_dof" />
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No Alliance"
+                        android:id="@+id/check_no_alliance" />
                 </LinearLayout>
 
                 <TextView

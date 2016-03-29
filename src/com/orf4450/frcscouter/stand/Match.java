@@ -39,6 +39,8 @@ public class Match {
 	private byte low_goals;
 	private byte endgame;
 	private String notes;
+	private boolean no_alliance;
+	private String no_alliance_reason;
 
 	public Match(NuggetCompound compound) {
 		match_number = ((NuggetShort) compound.getNugget("match_number")).getValue();
@@ -65,10 +67,13 @@ public class Match {
 		rock_speed = (byte) (short) ((NuggetShort) compound.getNugget("rock_speed")).getValue();
 		rough_crosses = (byte) (short) ((NuggetShort) compound.getNugget("rough_crosses")).getValue();
 		rough_speed = (byte) (short) ((NuggetShort) compound.getNugget("rough_speed")).getValue();
+		low_crosses = (byte) (short) ((NuggetShort) compound.getNugget("low_crosses")).getValue();
 		low_speed = (byte) (short) ((NuggetShort) compound.getNugget("low_speed")).getValue();
 		high_goals = (byte) (short) ((NuggetShort) compound.getNugget("high_goals")).getValue();
 		low_goals = (byte) (short) ((NuggetShort) compound.getNugget("low_goals")).getValue();
 		endgame = (byte) (short) ((NuggetShort) compound.getNugget("endgame")).getValue();
 		notes = ((NuggetString) compound.getNugget("notes")).getValue();
+		no_alliance = ((NuggetShort) compound.getNugget("no_alliance")).getValue() != 0;
+		no_alliance_reason = ((NuggetString)compound.getNugget("no_alliance_reason")).getValue();
 	}
 }
