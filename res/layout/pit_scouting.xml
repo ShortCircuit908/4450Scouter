@@ -97,20 +97,108 @@
                     android:ems="10"
                     android:id="@+id/pickup_notes"
                     android:hint="@string/label.pickup" />
-                <EditText
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="textMultiLine"
-                    android:ems="10"
-                    android:id="@+id/shooting_notes"
-                    android:hint="@string/label.shooting" />
-                <EditText
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/label.defenses"
+                    android:labelFor="@+id/defense_container" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/defense_container">
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/obstacle.portcullis"
+                        android:id="@+id/crosses_portcullis"
+                        android:checked="false" />
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/obstacle.chival_de_frise"
+                        android:id="@+id/crosses_chival"
+                        android:checked="false" />
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/obstacle.moat"
+                        android:id="@+id/crosses_moat"
+                        android:checked="false" />
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/obstacle.ramparts"
+                        android:id="@+id/crosses_ramparts"
+                        android:checked="false" />
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/obstacle.drawbridge"
+                        android:id="@+id/crosses_drawbridge"
+                        android:checked="false" />
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/obstacle.sally_port"
+                        android:id="@+id/crosses_sally"
+                        android:checked="false" />
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/obstacle.rock_wall"
+                        android:id="@+id/crosses_rock"
+                        android:checked="false" />
+                    
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/obstacle.rough_terrain"
+                        android:id="@+id/crosses_rough"
+                        android:checked="false" />
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/obstacle.low_bar"
+                        android:id="@+id/crosses_low"
+                        android:checked="false" />
+                </LinearLayout>
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="textMultiLine"
-                    android:ems="10"
-                    android:id="@+id/defense_notes"
-                    android:hint="@string/label.defenses" />
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/label.shooting"
+                    android:labelFor="@+id/shooting_container" />
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/shooting_container">
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label.low_goals"
+                        android:id="@+id/shoots_high"
+                        android:checked="false" />
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label.high_goals"
+                        android:id="@+id/shoots_low"
+                        android:checked="false" />
+                </LinearLayout>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

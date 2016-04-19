@@ -16,6 +16,7 @@ import android.widget.*;
 import com.orf4450.frcscouter.TimedConfirmation;
 import com.orf4450.frcscouter.UploadActivity;
 import com.orf4450.frcscouter.db.ColumnBinder;
+import com.orf4450.frcscouter.db.DummyColumnBinding;
 import com.orf4450.frcscouter.db.PitDB;
 import com.orf4450.frcscouter.db.TextViewColumnBinding;
 import com.orf4450.frcscouter.master.MasterDB;
@@ -35,6 +36,8 @@ public class PitScouting extends Activity {
 	private TextView team_name;
 	private ImageView image_view;
 	private ColumnBinder column_bindings;
+	private DummyColumnBinding<String> defense_notes;
+	private DummyColumnBinding<String> shooting_notes;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +53,11 @@ public class PitScouting extends Activity {
 		team_name = (TextView) post_load.findViewById(R.id.pit_team_name);
 		column_bindings.add(new TextViewColumnBinding(team_name, "team_name", 64));
 		column_bindings.add(new TextViewColumnBinding((TextView) post_load.findViewById(R.id.robot_description), "robot_description", "TEXT"));
-		column_bindings.add(new TextViewColumnBinding((TextView)post_load.findViewById(R.id.autonomous_notes), "auto_notes"));
-		column_bindings.add(new TextViewColumnBinding((TextView)post_load.findViewById(R.id.defense_notes), "defense_notes"));
-		column_bindings.add(new TextViewColumnBinding((TextView)post_load.findViewById(R.id.drive_base_notes), "drive_base_notes"));
-		column_bindings.add(new TextViewColumnBinding((TextView)post_load.findViewById(R.id.pickup_notes), "pickup_notes"));
-		column_bindings.add(new TextViewColumnBinding((TextView)post_load.findViewById(R.id.shooting_notes), "shooting_notes"));
+		column_bindings.add(new TextViewColumnBinding((TextView) post_load.findViewById(R.id.autonomous_notes), "auto_notes"));
+		column_bindings.add(defense_notes = new DummyColumnBinding<>("defense_notes", String.class, "TEXT"));
+		column_bindings.add(new TextViewColumnBinding((TextView) post_load.findViewById(R.id.drive_base_notes), "drive_base_notes"));
+		column_bindings.add(new TextViewColumnBinding((TextView) post_load.findViewById(R.id.pickup_notes), "pickup_notes"));
+		column_bindings.add(shooting_notes = new DummyColumnBinding<>("shooting_notes", String.class, "TEXT"));
 
 		database = new PitDB(this, column_bindings);
 		post_load.findViewById(R.id.take_picture).setOnClickListener(new View.OnClickListener() {
@@ -72,7 +75,7 @@ public class PitScouting extends Activity {
 		setContentView(post_load);
 	}
 
-	static final int REQUEST_TAKE_PHOTO = 1;
+	private static final int REQUEST_TAKE_PHOTO = 1;
 	private File current_photo_file;
 
 	private void dispatchTakePictureIntent() {
@@ -135,6 +138,56 @@ public class PitScouting extends Activity {
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {
 				Toast.makeText(PitScouting.this, "Saving", Toast.LENGTH_SHORT).show();
+				// TODO: Compile shooting stuff
+				StringBuilder builder = new StringBuilder();
+				if (((CheckBox) findViewById(R.id.crosses_portcullis)).isChecked()) {
+					builder.append("Portcullis, ");
+				}
+				if (((CheckBox) findViewById(R.id.crosses_chival)).isChecked()) {
+					builder.append("Chival de Frise, ");
+				}
+				if (((CheckBox) findViewById(R.id.crosses_moat)).isChecked()) {
+					builder.append("Moat, ");
+				}
+				if (((CheckBox) findViewById(R.id.crosses_ramparts)).isChecked()) {
+					builder.append("Ramparts, ");
+				}
+				if (((CheckBox) findViewById(R.id.crosses_drawbridge)).isChecked()) {
+					builder.append("Drawbridge, ");
+				}
+				if (((CheckBox) findViewById(R.id.crosses_sally)).isChecked()) {
+					builder.append("Sally Port, ");
+				}
+				if (((CheckBox) findViewById(R.id.crosses_rock)).isChecked()) {
+					builder.append("Rock Wall, ");
+				}
+				if (((CheckBox) findViewById(R.id.crosses_rough)).isChecked()) {
+					builder.append("Rough Terrain, ");
+				}
+				if (((CheckBox) findViewById(R.id.crosses_low)).isChecked()) {
+					builder.append("Low Bar, ");
+				}
+				if (builder.length() == 0) {
+					builder.append("None");
+				}
+				else {
+					builder.delete(builder.length() - 2, builder.length());
+				}
+				defense_notes.setValue(builder.toString());
+				builder = new StringBuilder();
+				if (((CheckBox) findViewById(R.id.shoots_high)).isChecked()) {
+					builder.append("High Goals, ");
+				}
+				if (((CheckBox) findViewById(R.id.shoots_low)).isChecked()) {
+					builder.append("Low Goals, ");
+				}
+				if (builder.length() == 0) {
+					builder.append("None");
+				}
+				else {
+					builder.delete(builder.length() - 2, builder.length());
+				}
+				shooting_notes.setValue(builder.toString());
 				if (database.save()) {
 					resetFields();
 					Toast.makeText(PitScouting.this, "Saved", Toast.LENGTH_SHORT).show();
