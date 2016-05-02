@@ -1,203 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:baselineAligned="false">
+    android:baselineAligned="false"
+    android:orientation="horizontal">
 
     <RelativeLayout
-        android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.7">
+        android:layout_weight="0.7"
+        android:orientation="vertical">
 
         <ImageView
+            android:id="@+id/image_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/image_view"
             android:layout_above="@+id/take_picture"
             android:contentDescription="@string/label.robot_image" />
 
         <Button
+            android:id="@+id/take_picture"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/label.take_photo"
-            android:id="@+id/take_picture"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true" />
+            android:text="@string/label.take_photo" />
     </RelativeLayout>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.3">
+        android:layout_weight="0.3"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/label.team_info"/>
+            android:text="@string/label.team_info"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="4"
             android:id="@+id/pit_team_number"
-            android:hint="@string/label.team" />
-
-        <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ems="4"
+            android:hint="@string/label.team"
+            android:inputType="number" />
+
+        <EditText
             android:id="@+id/pit_team_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:hint="@string/label.team_name" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/label.notes"/>
+            android:text="@string/label.notes"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="textMultiLine"
-                    android:ems="10"
                     android:id="@+id/robot_description"
-                    android:hint="@string/label.robot_description" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/label.robot_description"
+                    android:inputType="textMultiLine" />
 
                 <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="textMultiLine"
-                    android:ems="10"
                     android:id="@+id/autonomous_notes"
-                    android:hint="@string/label.autonomous" />
-                <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="textMultiLine"
                     android:ems="10"
+                    android:hint="@string/label.autonomous"
+                    android:inputType="textMultiLine" />
+
+                <EditText
                     android:id="@+id/drive_base_notes"
-                    android:hint="@string/label.drive_base" />
-                <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="textMultiLine"
                     android:ems="10"
+                    android:hint="@string/label.drive_base"
+                    android:inputType="textMultiLine" />
+
+                <EditText
                     android:id="@+id/pickup_notes"
-                    android:hint="@string/label.pickup" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/label.pickup"
+                    android:inputType="textMultiLine" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:labelFor="@+id/defense_container"
                     android:text="@string/label.defenses"
-                    android:labelFor="@+id/defense_container" />
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
 
                 <LinearLayout
-                    android:orientation="vertical"
+                    android:id="@+id/defense_container"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/defense_container">
+                    android:orientation="vertical">
 
                     <CheckBox
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/obstacle.portcullis"
                         android:id="@+id/crosses_portcullis"
-                        android:checked="false" />
-
-                    <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/obstacle.chival_de_frise"
+                        android:checked="false"
+                        android:text="@string/obstacle.portcullis" />
+
+                    <CheckBox
                         android:id="@+id/crosses_chival"
-                        android:checked="false" />
-
-                    <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/obstacle.moat"
+                        android:checked="false"
+                        android:text="@string/obstacle.chival_de_frise" />
+
+                    <CheckBox
                         android:id="@+id/crosses_moat"
-                        android:checked="false" />
-
-                    <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/obstacle.ramparts"
+                        android:checked="false"
+                        android:text="@string/obstacle.moat" />
+
+                    <CheckBox
                         android:id="@+id/crosses_ramparts"
-                        android:checked="false" />
-
-                    <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/obstacle.drawbridge"
+                        android:checked="false"
+                        android:text="@string/obstacle.ramparts" />
+
+                    <CheckBox
                         android:id="@+id/crosses_drawbridge"
-                        android:checked="false" />
-
-                    <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/obstacle.sally_port"
+                        android:checked="false"
+                        android:text="@string/obstacle.drawbridge" />
+
+                    <CheckBox
                         android:id="@+id/crosses_sally"
-                        android:checked="false" />
-
-                    <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/obstacle.rock_wall"
+                        android:checked="false"
+                        android:text="@string/obstacle.sally_port" />
+
+                    <CheckBox
                         android:id="@+id/crosses_rock"
-                        android:checked="false" />
-                    
-                    <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/obstacle.rough_terrain"
-                        android:id="@+id/crosses_rough"
-                        android:checked="false" />
+                        android:checked="false"
+                        android:text="@string/obstacle.rock_wall" />
 
                     <CheckBox
+                        android:id="@+id/crosses_rough"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/obstacle.low_bar"
+                        android:checked="false"
+                        android:text="@string/obstacle.rough_terrain" />
+
+                    <CheckBox
                         android:id="@+id/crosses_low"
-                        android:checked="false" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="@string/obstacle.low_bar" />
                 </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:labelFor="@+id/shooting_container"
                     android:text="@string/label.shooting"
-                    android:labelFor="@+id/shooting_container" />
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
                 <LinearLayout
-                    android:orientation="vertical"
+                    android:id="@+id/shooting_container"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/shooting_container">
+                    android:orientation="vertical">
+
                     <CheckBox
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/label.low_goals"
                         android:id="@+id/shoots_high"
-                        android:checked="false" />
-                    <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/label.high_goals"
+                        android:checked="false"
+                        android:text="@string/label.low_goals" />
+
+                    <CheckBox
                         android:id="@+id/shoots_low"
-                        android:checked="false" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="@string/label.high_goals" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>

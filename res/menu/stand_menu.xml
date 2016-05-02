@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:title="Save"
         android:id="@+id/save"
-        android:showAsAction="always" />
+        android:showAsAction="always"
+        android:title="Save" />
     <item
-        android:title="Load Match"
         android:id="@+id/load"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="ifRoom"
+        android:title="Load Match" />
     <item
-        android:title="Reset"
         android:id="@+id/reset"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="ifRoom"
+        android:title="Reset" />
     <item
-        android:title="Local Export"
         android:id="@+id/export"
-        android:showAsAction="never" />
+        android:showAsAction="never"
+        android:title="Local Export" />
     <item
-        android:title="Upload"
         android:id="@+id/upload"
-        android:showAsAction="never" />
+        android:showAsAction="never"
+        android:title="Upload" />
     <item
-        android:title="Delete Local Data"
         android:id="@+id/delete_all"
-        android:showAsAction="never" />
+        android:showAsAction="never"
+        android:title="Delete Local Data" />
     <!--
     <item
         android:title="Auto-upload"

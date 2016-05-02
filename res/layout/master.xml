@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:clickable="true"
     android:focusable="true"
-    android:clickable="true">
+    android:orientation="vertical">
 
     <ListView
+        android:id="@+id/list_active_connections"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/list_active_connections"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/switch_accept_connections"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/switch_accept_connections" />
+        android:layout_alignParentTop="true" />
 
     <ToggleButton
+        android:id="@+id/switch_accept_connections"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/switch_accept_connections"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:checked="false"
-        android:textOn="Reject new connections"
-        android:textOff="Accept new connections"/>
+        android:textOff="Accept new connections"
+        android:textOn="Reject new connections" />
 </RelativeLayout>
 
