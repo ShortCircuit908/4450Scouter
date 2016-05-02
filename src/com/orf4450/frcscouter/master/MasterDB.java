@@ -27,9 +27,9 @@ public class MasterDB {
 	private static final Gson gson = new GsonBuilder().serializeNulls().enableComplexMapKeySerialization().create();
 	private static final Type bundle_type = new TypeToken<DataBundle>() {
 	}.getType();
-	private long file_id = 0;
 	private final File data_dir;
 	private final Activity context;
+	private long file_id = 0;
 
 	public MasterDB(Activity context) {
 		data_dir = new File(Environment.getExternalStorageDirectory() + "/scouting_data");

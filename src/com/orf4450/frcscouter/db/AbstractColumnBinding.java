@@ -74,7 +74,7 @@ public abstract class AbstractColumnBinding<T extends View, E> {
 
 	public abstract void loadFromBundle(Bundle bundle);
 
-	public int getViewId(){
+	public int getViewId() {
 		return view.getId();
 	}
 }

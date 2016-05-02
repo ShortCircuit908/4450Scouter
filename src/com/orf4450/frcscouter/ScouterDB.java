@@ -11,7 +11,7 @@ import java.io.OutputStream;
  * @author Caleb Milligan
  *         Created on 2/12/2016
  */
-public abstract class ScouterDB extends SQLiteOpenHelper{
+public abstract class ScouterDB extends SQLiteOpenHelper {
 	public ScouterDB(Context context, String name, int version) {
 		super(context, name, null, version);
 	}

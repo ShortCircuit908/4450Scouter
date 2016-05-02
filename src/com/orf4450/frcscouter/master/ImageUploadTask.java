@@ -1,5 +1,7 @@
 package com.orf4450.frcscouter.master;
 
+import com.orf4450.frcscouter.ScouterConstants;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -24,10 +26,10 @@ public class ImageUploadTask extends UploadTask {
 	@Override
 	public void run() {
 		try {
-			if(file.exists()){
-				HttpURLConnection connection = (HttpURLConnection) new URL(MasterActivity.IMAGE_UPLOAD_URL + "?filename=" + file_name).openConnection();
+			if (file.exists()) {
+				HttpURLConnection connection = (HttpURLConnection) new URL(ScouterConstants.IMAGE_UPLOAD_URL + "?filename=" + file_name).openConnection();
 				connection.setRequestMethod("POST");
-				connection.setRequestProperty("User-Agent", "4450Scouting/1.0");
+				connection.setRequestProperty("User-Agent", ScouterConstants.APP_USER_AGENT);
 				connection.setDoOutput(true);
 				connection.connect();
 				FileInputStream in = new FileInputStream(file);

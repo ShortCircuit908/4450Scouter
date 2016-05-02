@@ -11,14 +11,9 @@ import java.util.concurrent.TimeUnit;
 public class UploadScheduler implements Runnable {
 	private static final ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(8);
 	private static final LinkedList<UploadTask> queue = new LinkedList<>();
-	static{
-		new UploadScheduler();
-	}
 
-	public static void scheduleTask(UploadTask task) {
-		synchronized (queue) {
-			queue.add(task);
-		}
+	static {
+		new UploadScheduler();
 	}
 
 	private UploadScheduler() {
@@ -28,6 +23,12 @@ public class UploadScheduler implements Runnable {
 				500,
 				TimeUnit.MILLISECONDS
 		);
+	}
+
+	public static void scheduleTask(UploadTask task) {
+		synchronized (queue) {
+			queue.add(task);
+		}
 	}
 
 	@Override

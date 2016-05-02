@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.widget.RadioGroup;
 
 /**
+ * Bind a radio group to an SQL table column
+ *
  * @author Caleb Milligan
  *         Created on 2/4/2016
  */
@@ -48,6 +50,7 @@ public class RadioGroupColumnBinding extends AbstractColumnBinding<RadioGroup, I
 			view.clearCheck();
 		}
 	}
+
 	@Override
 	public void resetValue() {
 		view.clearCheck();

@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
+import com.orf4450.frcscouter.ScouterConstants;
 import com.orf4450.frcscouter.TimedConfirmation;
 import com.orf4450.frcscouter.UploadActivity;
 import com.orf4450.frcscouter.db.*;
@@ -130,13 +131,13 @@ public class StandScouting extends Activity {
 
 		column_bindings.add(new CompoundButtonColumnBinding((CheckBox) post_load.findViewById(R.id.check_dof), "died_on_field"));
 
-		column_bindings.add(new CompoundButtonColumnBinding((CheckBox)post_load.findViewById(R.id.check_no_alliance), "no_alliance"));
+		column_bindings.add(new CompoundButtonColumnBinding((CheckBox) post_load.findViewById(R.id.check_no_alliance), "no_alliance"));
 
 		column_bindings.add(new CompoundButtonColumnBinding((CheckBox) post_load.findViewById(R.id.defended), "defended"));
 
-		column_bindings.add(new TextViewColumnBinding((TextView)post_load.findViewById(R.id.notes), "notes"));
+		column_bindings.add(new TextViewColumnBinding((TextView) post_load.findViewById(R.id.notes), "notes"));
 
-		column_bindings.add(new TextViewColumnBinding((TextView)post_load.findViewById(R.id.no_alliance_reason), "no_alliance_reason"));
+		column_bindings.add(new TextViewColumnBinding((TextView) post_load.findViewById(R.id.no_alliance_reason), "no_alliance_reason"));
 
 		database = new StandDB(this, column_bindings);
 

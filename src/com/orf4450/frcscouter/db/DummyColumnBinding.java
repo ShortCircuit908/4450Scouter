@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 
 /**
+ * A dummy column binding for custom data
+ *
  * @author Caleb Milligan
  *         Created on 2/10/2016
  */

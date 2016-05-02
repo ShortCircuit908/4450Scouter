@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.widget.CompoundButton;
 
 /**
+ * Bind a compound button (check boxes, radio buttons, switches, etc.) to an SQL table column
+ *
  * @author Caleb Milligan
  *         Created on 2/4/2016
  */

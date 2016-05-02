@@ -1,12 +1,19 @@
-package com.orf4450.frcscouter.stand;
+package com.orf4450.frcscouter;
 
 import com.orf4450.scouter.R;
 
 /**
+ * A bunch of
+ *
  * @author Caleb Milligan
  *         Created on 2/4/2016
  */
 public interface ScouterConstants {
+	///////////////////7674047e-6e47-4bf0-831f-209e3f9dd23f
+	String APP_UUID = "7674047e-6e47-4bf0-831f-209e3f9dd23f";
+	String APP_USER_AGENT = "4450Scouting/1.0";
+	String DATA_UPLOAD_URL = "http://orf.hulk.osd.wednet.edu/scouting/upload.php";
+	String IMAGE_UPLOAD_URL = "http://orf.hulk.osd.wednet.edu/scouting/image-upload.php";
 	int[][] pickup_speed_bindings = {
 			{R.id.auto_pickup_fast, 2},
 			{R.id.auto_pickup_medium, 1},

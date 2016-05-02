@@ -21,11 +21,11 @@ public class DataBundle {
 		return teams;
 	}
 
-	public void addMatch(Match match){
+	public void addMatch(Match match) {
 		matches.add(match);
 	}
 
-	public void addTeam(PitTeam team){
+	public void addTeam(PitTeam team) {
 		teams.add(team);
 	}
 }

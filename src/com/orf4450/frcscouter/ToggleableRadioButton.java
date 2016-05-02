@@ -6,6 +6,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 /**
+ * A radio button which may be unchecked
+ *
  * @author Caleb Milligan
  *         Created on 2/4/2016
  */

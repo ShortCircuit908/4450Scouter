@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
+import com.orf4450.frcscouter.ScouterConstants;
 import com.shortcircuit.nbn.Nugget;
 import com.shortcircuit.nbn.nugget.NuggetCompound;
 
@@ -26,7 +27,7 @@ public class IncomingConnectionSink implements Runnable {
 		this.database = database;
 		this.list_adapter = list_adapter;
 		this.server_socket = BluetoothAdapter.getDefaultAdapter().listenUsingRfcommWithServiceRecord(
-				"Scoutmaster", UUID.fromString("7674047e-6e47-4bf0-831f-209e3f9dd23f"));
+				"Scoutmaster", UUID.fromString(ScouterConstants.APP_UUID));
 		new Thread(this).start();
 	}
 
@@ -40,13 +41,13 @@ public class IncomingConnectionSink implements Runnable {
 					@Override
 					public void onDataRecieved(Nugget<?> data) {
 						try {
-							NuggetCompound compound = (NuggetCompound)data;
+							NuggetCompound compound = (NuggetCompound) data;
 							database.saveNugget(compound.getNugget("stand_scouting"));
 							database.saveNugget(compound.getNugget("pit_scouting"));
 							activity.runOnUiThread(new Runnable() {
 								@Override
 								public void run() {
-									if(activity.shouldAutoUpload()){
+									if (activity.shouldAutoUpload()) {
 										activity.upload();
 									}
 									Toast toast = Toast.makeText(activity, "Data received", Toast.LENGTH_SHORT);

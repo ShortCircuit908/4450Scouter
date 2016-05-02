@@ -14,8 +14,8 @@ import android.widget.ProgressBar;
 public class TimedConfirmation extends Thread {
 	private final ProgressBar progress_bar;
 	private final Runnable callback;
-	private boolean is_holding = false;
 	public Handler handler;
+	private boolean is_holding = false;
 
 	public TimedConfirmation(int millis, ProgressBar progress_bar, Runnable callback) {
 		this.progress_bar = progress_bar;
@@ -68,7 +68,7 @@ public class TimedConfirmation extends Thread {
 		Looper.loop();
 	}
 
-	public void exit(){
+	public void exit() {
 		handler.getLooper().quit();
 	}
 }

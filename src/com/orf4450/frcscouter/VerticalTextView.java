@@ -23,7 +23,7 @@ public class VerticalTextView extends TextView {
 	}
 
 	@Override
-	public void setGravity(int gravity){
+	public void setGravity(int gravity) {
 		super.setGravity(gravity);
 		if (Gravity.isVertical(gravity) && (gravity & Gravity.VERTICAL_GRAVITY_MASK) == Gravity.BOTTOM) {
 			super.setGravity((gravity & Gravity.HORIZONTAL_GRAVITY_MASK) | Gravity.TOP);

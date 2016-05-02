@@ -22,7 +22,7 @@ public class MatchDescriptor {
 	}
 
 	@Override
-	public String toString(){
+	public String toString() {
 		return "#" + match_number + " (Team " + team_number + ")";
 	}
 }

@@ -26,8 +26,6 @@ public class MasterActivity extends Activity {
 	private ToggleButton switch_accept_connections;
 	private SharedPreferences settings;
 	private MasterDB database_helper;
-	public static final String APPLICATION_URL = "http://orf.hulk.osd.wednet.edu/scouting/upload.php";
-	public static final String IMAGE_UPLOAD_URL = "http://orf.hulk.osd.wednet.edu/scouting/image-upload.php";
 
 	@Override
 	public void onCreate(Bundle state) {

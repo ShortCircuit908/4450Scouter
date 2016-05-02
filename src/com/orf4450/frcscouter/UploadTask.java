@@ -14,9 +14,9 @@ import java.util.zip.DeflaterOutputStream;
  *         Created on 1/14/2016
  */
 public class UploadTask implements Runnable {
-	private ScouterDB[] databases;
 	private final BluetoothDevice device;
 	private final UploadCallback callback;
+	private ScouterDB[] databases;
 
 	public UploadTask(BluetoothDevice device, UploadCallback callback, ScouterDB... databases) {
 		this.databases = databases;
@@ -30,11 +30,11 @@ public class UploadTask implements Runnable {
 		Throwable thrown = null;
 		try {
 			BluetoothSocket socket = device.createRfcommSocketToServiceRecord(
-					UUID.fromString("7674047e-6e47-4bf0-831f-209e3f9dd23f"));
+					UUID.fromString(ScouterConstants.APP_UUID));
 			socket.connect();
 			DataOutputStream out = new DataOutputStream(new DeflaterOutputStream(socket.getOutputStream()));
 			NuggetCompound nugget = new NuggetCompound("scouting_data");
-			for(ScouterDB database : databases) {
+			for (ScouterDB database : databases) {
 				nugget.addNugget(database.toNugget());
 			}
 			Nugget.writeNugget(nugget, out);
@@ -45,7 +45,7 @@ public class UploadTask implements Runnable {
 		catch (Throwable e) {
 			thrown = e;
 		}
-		if(thrown != null){
+		if (thrown != null) {
 			thrown.printStackTrace();
 		}
 		callback.onUploadFinished(thrown);

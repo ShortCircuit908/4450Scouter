@@ -29,6 +29,7 @@ import java.io.IOException;
  *         Created on 2/10/2016
  */
 public class PitScouting extends Activity {
+	private static final int REQUEST_TAKE_PHOTO = 1;
 	private PitDB database;
 	private SharedPreferences settings;
 	private TextView team_number;
@@ -37,6 +38,13 @@ public class PitScouting extends Activity {
 	private ColumnBinder column_bindings;
 	private DummyColumnBinding<String> defense_notes;
 	private DummyColumnBinding<String> shooting_notes;
+	private File current_photo_file;
+
+	public static File getImageFile(Object team_number) {
+		String file_name = "ROBOT_" + team_number + ".jpg";
+		File storage_dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+		return new File(storage_dir, file_name);
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,9 +81,6 @@ public class PitScouting extends Activity {
 		image_view = (ImageView) post_load.findViewById(R.id.image_view);
 		setContentView(post_load);
 	}
-
-	private static final int REQUEST_TAKE_PHOTO = 1;
-	private File current_photo_file;
 
 	private void dispatchTakePictureIntent() {
 		Intent capture_image_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -266,11 +271,5 @@ public class PitScouting extends Activity {
 		options.inBitmap = image_view.getDrawingCache();
 		Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), options);
 		image_view.setImageBitmap(bitmap);
-	}
-
-	public static File getImageFile(Object team_number) {
-		String file_name = "ROBOT_" + team_number + ".jpg";
-		File storage_dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-		return new File(storage_dir, file_name);
 	}
 }

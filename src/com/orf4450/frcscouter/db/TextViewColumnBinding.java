@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 /**
+ * Bind a text view (TextView, EditText, etc.)
+ *
  * @author Caleb Milligan
  *         Created on 2/4/2016
  */
@@ -21,7 +23,7 @@ public class TextViewColumnBinding extends AbstractColumnBinding<TextView, CharS
 		this(view, column_name, column_class, -1);
 	}
 
-	public TextViewColumnBinding(TextView view, String column_name, String column_class, int column_length){
+	public TextViewColumnBinding(TextView view, String column_name, String column_class, int column_length) {
 		this(view, column_name, column_class, column_length, true, null);
 	}
 
@@ -54,15 +56,15 @@ public class TextViewColumnBinding extends AbstractColumnBinding<TextView, CharS
 		setValue(bundle.containsKey(column_name) ? bundle.getCharSequence(column_name) : "");
 	}
 
-	public CharSequence getError(){
+	public CharSequence getError() {
 		return view.getError();
 	}
 
-	public void setError(CharSequence error){
+	public void setError(CharSequence error) {
 		view.setError(error);
 	}
 
-	public void setError(CharSequence error, Drawable drawable){
+	public void setError(CharSequence error, Drawable drawable) {
 		view.setError(error, drawable);
 	}
 }

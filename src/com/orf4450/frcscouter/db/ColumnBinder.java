@@ -11,16 +11,31 @@ import java.util.LinkedList;
 import java.util.Map;
 
 /**
+ * Core class to handle Android input view column bindings.
+ * Can be used to generate database schemas from data through {@link #generateSchema(String)}
+ *
  * @author Caleb Milligan
  *         Created on 2/4/2016
  */
 public class ColumnBinder {
 	private final LinkedList<AbstractColumnBinding<?, ?>> bindings = new LinkedList<>();
 
+	/**
+	 * Add a binding
+	 *
+	 * @param binding
+	 */
 	public void add(AbstractColumnBinding<?, ?> binding) {
 		bindings.add(binding);
 	}
 
+	/**
+	 * Get a binding by its column name
+	 *
+	 * @param column_name
+	 * @param <T>
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public <T extends AbstractColumnBinding<?, ?>> T get(String column_name) {
 		for (AbstractColumnBinding<?, ?> binding : bindings) {
@@ -31,10 +46,24 @@ public class ColumnBinder {
 		return null;
 	}
 
+	/**
+	 * Get a binding by its bound view
+	 *
+	 * @param view
+	 * @param <T>
+	 * @return
+	 */
 	public <T extends AbstractColumnBinding<?, ?>> T get(View view) {
 		return get(view.getId());
 	}
 
+	/**
+	 * Get a binding by its bound view ID
+	 *
+	 * @param viewid
+	 * @param <T>
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public <T extends AbstractColumnBinding<?, ?>> T get(int viewid) {
 		for (AbstractColumnBinding<?, ?> binding : bindings) {
@@ -45,6 +74,12 @@ public class ColumnBinder {
 		return null;
 	}
 
+	/**
+	 * Generate a MySQL/SQLite database schema with columns from the current bindings
+	 *
+	 * @param table_name
+	 * @return
+	 */
 	public String generateSchema(String table_name) {
 		if (bindings.size() < 1) {
 			throw new IllegalStateException("At least one binding is required");
@@ -71,6 +106,13 @@ public class ColumnBinder {
 		return builder.toString();
 	}
 
+	/**
+	 * Save the state of all bindings to a database
+	 *
+	 * @param db
+	 * @param table_name
+	 * @return
+	 */
 	public int save(SQLiteDatabase db, String table_name) {
 		if (bindings.size() < 1) {
 			throw new IllegalStateException("At least one binding is required");
@@ -91,13 +133,21 @@ public class ColumnBinder {
 		db.execSQL(query_builder.toString(), bindargs.toArray());
 		Cursor cursor = db.rawQuery("SELECT last_insert_rowid()", null);
 		int id = -1;
-		if(cursor.moveToNext()){
+		if (cursor.moveToNext()) {
 			id = cursor.getInt(0);
 		}
 		cursor.close();
 		return id;
 	}
 
+	/**
+	 * Get an array of row IDs with fields matching the provided parameters (only '=' matching)
+	 *
+	 * @param db                the database to use
+	 * @param table_name        the table to query
+	 * @param search_parameters a map of column names and value fields
+	 * @return array containing row IDs of matching rows
+	 */
 	public Integer[] queryRowsMatchingParameters(SQLiteDatabase db, String table_name, HashMap<String, Object> search_parameters) {
 		StringBuilder query_builder = new StringBuilder("SELECT `id` FROM `")
 				.append(table_name).append("`");
@@ -112,6 +162,12 @@ public class ColumnBinder {
 		return ids.toArray(new Integer[ids.size()]);
 	}
 
+	/**
+	 * Don't touch this unless it breaks
+	 *
+	 * @param query_builder
+	 * @param search_parameters
+	 */
 	private void appendWhereClause(StringBuilder query_builder, HashMap<String, Object> search_parameters) {
 		if (search_parameters.size() > 0) {
 			query_builder.append(" WHERE ");
@@ -137,6 +193,13 @@ public class ColumnBinder {
 		}
 	}
 
+	/**
+	 * Delete rows with fields matching the provided parameters (only '=' matching)
+	 *
+	 * @param db                the database to use
+	 * @param table_name        the table to query
+	 * @param search_parameters a map of column names and value fields
+	 */
 	public void deleteRowsMatchingParameters(SQLiteDatabase db, String table_name, HashMap<String, Object> search_parameters) {
 		StringBuilder query_builder = new StringBuilder("DELETE FROM `")
 				.append(table_name).append("`");
@@ -145,6 +208,13 @@ public class ColumnBinder {
 		db.execSQL(query_builder.toString());
 	}
 
+	/**
+	 * Load the state of all bindings from the database
+	 *
+	 * @param db         the database to use
+	 * @param table_name the table to query
+	 * @param id         the desired row ID
+	 */
 	@SuppressWarnings("unchecked")
 	public void load(SQLiteDatabase db, String table_name, int id) {
 		Cursor cursor = db.rawQuery("SELECT * FROM `" + table_name + "` WHERE `id`=" + id, null);
@@ -212,10 +282,20 @@ public class ColumnBinder {
 		cursor.close();
 	}
 
+	/**
+	 * Save the state of all bindings to a new {@link android.os.Bundle}
+	 *
+	 * @return a new {@link android.os.Bundle} containing the state of all bindings
+	 */
 	public Bundle saveToBundle() {
 		return saveToBundle(null);
 	}
 
+	/**
+	 * Save the state of all bindings to an existing {@link android.os.Bundle}
+	 *
+	 * @return the {@link android.os.Bundle} containing the state of all bindings
+	 */
 	public Bundle saveToBundle(Bundle bundle) {
 		if (bundle == null) {
 			bundle = new Bundle(bindings.size());
@@ -226,6 +306,11 @@ public class ColumnBinder {
 		return bundle;
 	}
 
+	/**
+	 * Load the state of all bindings from a {@link android.os.Bundle}
+	 *
+	 * @param bundle the bundle to load from
+	 */
 	public void loadFromBundle(Bundle bundle) {
 		if (bundle == null) {
 			resetAll();
@@ -237,6 +322,9 @@ public class ColumnBinder {
 		}
 	}
 
+	/**
+	 * Reset the state of all bindings
+	 */
 	public void resetAll() {
 		for (AbstractColumnBinding<?, ?> binding : bindings) {
 			binding.resetValue();

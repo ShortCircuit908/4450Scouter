@@ -18,14 +18,14 @@ public class PitTeam {
 	private String pickup_notes;
 	private String shooting_notes;
 
-	public PitTeam(NuggetCompound compound){
-		team_number = ((NuggetShort)compound.getNugget("team_number")).getValue();
-		team_name = ((NuggetString)compound.getNugget("team_name")).getValue();
-		robot_description = ((NuggetString)compound.getNugget("robot_description")).getValue();
-		auto_notes = ((NuggetString)compound.getNugget("auto_notes")).getValue();
-		defense_notes = ((NuggetString)compound.getNugget("defense_notes")).getValue();
-		drive_base_notes = ((NuggetString)compound.getNugget("drive_base_notes")).getValue();
-		pickup_notes = ((NuggetString)compound.getNugget("pickup_notes")).getValue();
-		shooting_notes = ((NuggetString)compound.getNugget("shooting_notes")).getValue();
+	public PitTeam(NuggetCompound compound) {
+		team_number = ((NuggetShort) compound.getNugget("team_number")).getValue();
+		team_name = ((NuggetString) compound.getNugget("team_name")).getValue();
+		robot_description = ((NuggetString) compound.getNugget("robot_description")).getValue();
+		auto_notes = ((NuggetString) compound.getNugget("auto_notes")).getValue();
+		defense_notes = ((NuggetString) compound.getNugget("defense_notes")).getValue();
+		drive_base_notes = ((NuggetString) compound.getNugget("drive_base_notes")).getValue();
+		pickup_notes = ((NuggetString) compound.getNugget("pickup_notes")).getValue();
+		shooting_notes = ((NuggetString) compound.getNugget("shooting_notes")).getValue();
 	}
 }

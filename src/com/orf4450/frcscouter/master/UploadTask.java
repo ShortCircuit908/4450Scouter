@@ -5,8 +5,8 @@ package com.orf4450.frcscouter.master;
  *         Created on 2/22/2016
  */
 public abstract class UploadTask implements Runnable {
-	protected Throwable error = null;
 	protected final Callback callback;
+	protected Throwable error = null;
 
 	public UploadTask(Callback callback) {
 		this.callback = callback;

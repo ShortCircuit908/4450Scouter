@@ -36,14 +36,13 @@ public class UploadActivity extends Activity {
 		stand_db = new StandDB(this, null);
 
 		BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-		//bluetooth_manager.getConnectedDevices(BluetoothProfile.GATT_SERVER);
 		Set<BluetoothDevice> devices = adapter.getBondedDevices();
 		list_adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
-		for(BluetoothDevice device : devices){
+		for (BluetoothDevice device : devices) {
 			list_adapter.add(new RemoteDeviceWrapper(device));
 		}
 		list_adapter.notifyDataSetChanged();
-		list_devices = (ListView)findViewById(R.id.list_devices);
+		list_devices = (ListView) findViewById(R.id.list_devices);
 		list_devices.setAdapter(list_adapter);
 		list_devices.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override

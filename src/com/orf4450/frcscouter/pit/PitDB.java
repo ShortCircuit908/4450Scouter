@@ -4,9 +4,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
+import com.orf4450.frcscouter.ScouterDB;
 import com.orf4450.frcscouter.db.ColumnBinder;
 import com.orf4450.frcscouter.db.DummyColumnBinding;
-import com.orf4450.frcscouter.ScouterDB;
 import com.orf4450.frcscouter.db.TextViewColumnBinding;
 import com.orf4450.scouter.R;
 import com.shortcircuit.nbn.Nugget;
@@ -23,8 +23,8 @@ import java.io.OutputStream;
  *         Created on 2/11/2016
  */
 public class PitDB extends ScouterDB {
-	private static final int DATABASE_VERSION = 1;
 	public static final String SCOUTING_TABLE_NAME = "pit_scouting";
+	private static final int DATABASE_VERSION = 1;
 	private final ColumnBinder column_binder;
 
 	public PitDB(Context context, ColumnBinder column_binder) {

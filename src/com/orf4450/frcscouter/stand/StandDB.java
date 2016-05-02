@@ -3,9 +3,9 @@ package com.orf4450.frcscouter.stand;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import com.orf4450.frcscouter.ScouterDB;
 import com.orf4450.frcscouter.db.ColumnBinder;
 import com.orf4450.frcscouter.db.DummyColumnBinding;
-import com.orf4450.frcscouter.ScouterDB;
 import com.orf4450.frcscouter.db.TextViewColumnBinding;
 import com.orf4450.scouter.R;
 import com.shortcircuit.nbn.Nugget;
@@ -23,8 +23,8 @@ import java.util.HashMap;
  *         Created on 2/4/2016
  */
 public class StandDB extends ScouterDB {
-	private static final int DATABASE_VERSION = 1;
 	public static final String SCOUTING_TABLE_NAME = "stand_scouting";
+	private static final int DATABASE_VERSION = 1;
 	private final ColumnBinder column_binder;
 
 	public StandDB(Context context, ColumnBinder column_binder) {

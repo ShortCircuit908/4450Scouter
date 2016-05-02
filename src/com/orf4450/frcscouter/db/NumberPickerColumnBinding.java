@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.widget.NumberPicker;
 
 /**
+ * Bind a number picker to an SQL table column
+ *
  * @author Caleb Milligan
  *         Created on 2/4/2016
  */

@@ -74,6 +74,6 @@ public class Match {
 		endgame = (byte) (short) ((NuggetShort) compound.getNugget("endgame")).getValue();
 		notes = ((NuggetString) compound.getNugget("notes")).getValue();
 		no_alliance = ((NuggetShort) compound.getNugget("no_alliance")).getValue() != 0;
-		no_alliance_reason = ((NuggetString)compound.getNugget("no_alliance_reason")).getValue();
+		no_alliance_reason = ((NuggetString) compound.getNugget("no_alliance_reason")).getValue();
 	}
 }
