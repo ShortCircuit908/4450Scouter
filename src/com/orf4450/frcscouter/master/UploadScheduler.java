@@ -5,7 +5,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author ShortCircuit908
+ * @author Caleb Milligan
  *         Created on 2/22/2016
  */
 public class UploadScheduler implements Runnable {

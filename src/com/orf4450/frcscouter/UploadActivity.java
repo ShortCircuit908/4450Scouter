@@ -11,8 +11,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import com.orf4450.frcscouter.db.PitDB;
-import com.orf4450.frcscouter.db.StandDB;
+import com.orf4450.frcscouter.pit.PitDB;
+import com.orf4450.frcscouter.stand.StandDB;
 import com.orf4450.scouter.R;
 
 import java.util.Set;

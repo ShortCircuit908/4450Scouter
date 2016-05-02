@@ -6,7 +6,7 @@ import com.orf4450.frcscouter.stand.Match;
 import java.util.LinkedList;
 
 /**
- * @author ShortCircuit908
+ * @author Caleb Milligan
  *         Created on 2/19/2016
  */
 public class DataBundle {

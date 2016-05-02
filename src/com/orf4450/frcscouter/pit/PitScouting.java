@@ -17,7 +17,6 @@ import com.orf4450.frcscouter.TimedConfirmation;
 import com.orf4450.frcscouter.UploadActivity;
 import com.orf4450.frcscouter.db.ColumnBinder;
 import com.orf4450.frcscouter.db.DummyColumnBinding;
-import com.orf4450.frcscouter.db.PitDB;
 import com.orf4450.frcscouter.db.TextViewColumnBinding;
 import com.orf4450.frcscouter.master.MasterDB;
 import com.orf4450.scouter.R;

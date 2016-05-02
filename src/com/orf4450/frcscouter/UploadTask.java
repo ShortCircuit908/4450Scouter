@@ -2,7 +2,6 @@ package com.orf4450.frcscouter;
 
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-import com.orf4450.frcscouter.db.ScouterDB;
 import com.shortcircuit.nbn.Nugget;
 import com.shortcircuit.nbn.nugget.NuggetCompound;
 

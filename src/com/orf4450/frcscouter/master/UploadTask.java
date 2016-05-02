@@ -1,7 +1,7 @@
 package com.orf4450.frcscouter.master;
 
 /**
- * @author ShortCircuit908
+ * @author Caleb Milligan
  *         Created on 2/22/2016
  */
 public abstract class UploadTask implements Runnable {

@@ -11,7 +11,7 @@ public class DummyColumnBinding<T> extends AbstractColumnBinding<View, T> {
 	private T default_value;
 	private T value;
 
-	public DummyColumnBinding( String column_name, Class<T> value_class, String column_class) {
+	public DummyColumnBinding(String column_name, Class<T> value_class, String column_class) {
 		this(column_name, value_class, column_class, null);
 	}
 

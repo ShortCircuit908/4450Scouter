@@ -7,7 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * @author ShortCircuit908
+ * @author Caleb Milligan
  *         Created on 2/24/2016
  */
 public class DataUploadTask extends UploadTask{

@@ -51,8 +51,7 @@ public class ColumnBinder {
 		}
 		StringBuilder builder = new StringBuilder("DROP TABLE IF EXISTS `")
 				.append(table_name)
-				.append("`;")
-				.append("CREATE TABLE `")
+				.append("`; CREATE TABLE `")
 				.append(table_name)
 				.append("` (`id` INTEGER PRIMARY KEY");
 		for (AbstractColumnBinding<?, ?> binding : bindings) {

@@ -5,7 +5,7 @@ import com.shortcircuit.nbn.nugget.NuggetShort;
 import com.shortcircuit.nbn.nugget.NuggetString;
 
 /**
- * @author ShortCircuit908
+ * @author Caleb Milligan
  *         Created on 2/19/2016
  */
 public class Match {

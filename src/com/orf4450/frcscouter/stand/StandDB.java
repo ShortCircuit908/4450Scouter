@@ -1,9 +1,12 @@
-package com.orf4450.frcscouter.db;
+package com.orf4450.frcscouter.stand;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import com.orf4450.frcscouter.stand.MatchDescriptor;
+import com.orf4450.frcscouter.db.ColumnBinder;
+import com.orf4450.frcscouter.db.DummyColumnBinding;
+import com.orf4450.frcscouter.ScouterDB;
+import com.orf4450.frcscouter.db.TextViewColumnBinding;
 import com.orf4450.scouter.R;
 import com.shortcircuit.nbn.Nugget;
 import com.shortcircuit.nbn.NuggetFactory;

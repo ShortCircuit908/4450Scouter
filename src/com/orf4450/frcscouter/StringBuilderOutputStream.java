@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * @author ShortCircuit908
+ * @author Caleb Milligan
  *         Created on 2/19/2016
  */
 public class StringBuilderOutputStream extends OutputStream {
