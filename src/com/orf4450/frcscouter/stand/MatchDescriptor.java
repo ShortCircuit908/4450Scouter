@@ -1,6 +1,8 @@
 package com.orf4450.frcscouter.stand;
 
 /**
+ * Just a dummy class to describe matches
+ *
  * @author Caleb Milligan
  *         Created on 1/13/2016
  */

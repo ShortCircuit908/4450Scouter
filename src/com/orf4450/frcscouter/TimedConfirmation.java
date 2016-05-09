@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 /**
+ * A confirmation dialog which must be pressed and held
+ *
  * @author Caleb Milligan
  *         Created on 1/13/2016
  */
@@ -20,12 +22,15 @@ public class TimedConfirmation extends Thread {
 	public TimedConfirmation(int millis, ProgressBar progress_bar, Runnable callback) {
 		this.progress_bar = progress_bar;
 		this.callback = callback;
+		// Set the listener
 		progress_bar.setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
+				// Begin counting down
 				if (event.getAction() == MotionEvent.ACTION_DOWN) {
 					is_holding = true;
 				}
+				// Cancel countdown
 				if (event.getAction() == MotionEvent.ACTION_UP) {
 					is_holding = false;
 				}
@@ -38,6 +43,7 @@ public class TimedConfirmation extends Thread {
 
 	@Override
 	public void run() {
+		// Start the thigummy
 		Looper.prepare();
 		handler = new Handler(new Handler.Callback() {
 			@Override

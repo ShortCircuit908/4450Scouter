@@ -5,6 +5,9 @@ import com.shortcircuit.nbn.nugget.NuggetShort;
 import com.shortcircuit.nbn.nugget.NuggetString;
 
 /**
+ * Wrapper class to contain all match data for JSON serialization.
+ * This serves as a bridge between NamedBinaryNugget protocol and JSON, using Google's Gson library
+ *
  * @author Caleb Milligan
  *         Created on 2/19/2016
  */

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
-import com.orf4450.frcscouter.ScouterDB;
+import com.orf4450.frcscouter.db.ScouterDB;
 import com.orf4450.frcscouter.db.ColumnBinder;
 import com.orf4450.frcscouter.db.DummyColumnBinding;
 import com.orf4450.frcscouter.db.TextViewColumnBinding;

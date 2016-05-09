@@ -1,4 +1,4 @@
-package com.orf4450.frcscouter;
+package com.orf4450.frcscouter.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteOpenHelper;

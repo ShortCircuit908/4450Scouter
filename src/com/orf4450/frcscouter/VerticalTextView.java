@@ -8,6 +8,8 @@ import android.view.Gravity;
 import android.widget.TextView;
 
 /**
+ * Display text vertically
+ *
  * @author Caleb Milligan
  *         Created on 2/4/2016
  */

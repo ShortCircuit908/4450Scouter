@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * A dummy OutputStream which appends content to a string
+ * A dummy OutputStream which appends content to a String
  *
  * @author Caleb Milligan
  *         Created on 2/19/2016
